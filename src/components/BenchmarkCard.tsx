@@ -3,6 +3,8 @@ import { compareToThirteenth } from "../lib/calculations";
 import { formatEUR, formatSignedEUR, formatSignedPercent } from "../lib/format";
 import { formatLong } from "../lib/dates";
 import { InfoTooltip } from "./InfoTooltip";
+import { CardTitle } from "./CardTitle";
+import { IconTarget } from "./icons";
 
 export function BenchmarkCard() {
   const { series, asOfIso, amount } = useDashboard();
@@ -21,10 +23,10 @@ export function BenchmarkCard() {
 
   return (
     <div className="card">
-      <h2 className="card-title">
+      <CardTitle icon={IconTarget} tone="violet">
         You vs. the 13th
         <InfoTooltip text="Your organization sets its monthly conversion rate around the 13th of each month. This compares that benchmark rate against today's rate, for the amount in the calculator above." />
-      </h2>
+      </CardTitle>
       <div className="card-sub">Organization benchmark: {formatLong(cmp.benchmarkPoint.date)}{!cmp.benchmarkExact ? " (nearest trading day)" : ""}</div>
 
       <div className="benchmark-grid">

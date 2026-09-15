@@ -2,6 +2,8 @@ import { useDashboard } from "../context/DashboardContext";
 import { buildDecisionSummary, FAVORABILITY_LABELS } from "../lib/calculations";
 import { formatPercent, formatSignedEUR, formatSignedPercent } from "../lib/format";
 import { InfoTooltip } from "./InfoTooltip";
+import { CardTitle } from "./CardTitle";
+import { IconChart } from "./icons";
 
 const INTERPRETATION: Record<string, string> = {
   VERY_FAVORABLE: "From a recent historical perspective, today's USD→EUR rate is very favorable — it's near the top of its recent range.",
@@ -18,7 +20,7 @@ export function DecisionCard() {
 
   return (
     <div className="card">
-      <h2 className="card-title">
+      <CardTitle icon={IconChart} tone="accent">
         Should I exchange today?
         <InfoTooltip
           text={
@@ -28,7 +30,7 @@ export function DecisionCard() {
             </>
           }
         />
-      </h2>
+      </CardTitle>
       <div className="card-sub">Based on transparent historical percentiles — not a prediction of what happens next.</div>
 
       <span className={`favorability-badge badge-${summary.label.toLowerCase()}`}>{FAVORABILITY_LABELS[summary.label]}</span>

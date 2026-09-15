@@ -5,6 +5,8 @@ import { evaluateConversions, resolveTradingPoint } from "../lib/calculations";
 import { formatEUR, formatSignedEUR, formatUSD } from "../lib/format";
 import { formatLong, todayISO } from "../lib/dates";
 import type { ConversionRecord } from "../lib/types";
+import { CardTitle } from "./CardTitle";
+import { IconList } from "./icons";
 
 function newId(): string {
   return typeof crypto !== "undefined" && "randomUUID" in crypto ? crypto.randomUUID() : `${Date.now()}-${Math.random()}`;
@@ -92,7 +94,7 @@ export function ConversionLog() {
 
   return (
     <div className="card">
-      <h2 className="card-title">Was the headache worth it?</h2>
+      <CardTitle icon={IconList} tone="violet">Was the headache worth it?</CardTitle>
       <div className="card-sub">
         Log your real conversions and compare them against simply using the 13th-of-the-month benchmark every time.
       </div>

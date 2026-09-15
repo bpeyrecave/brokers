@@ -1,5 +1,7 @@
 import { useMemo } from "react";
 import { useDashboard } from "../context/DashboardContext";
+import { CardTitle } from "./CardTitle";
+import { IconCalendar } from "./icons";
 
 function formatEventDate(iso: string): string {
   const d = new Date(iso);
@@ -16,7 +18,7 @@ export function EventsTimeline() {
 
   return (
     <div className="card">
-      <h2 className="card-title">What to watch</h2>
+      <CardTitle icon={IconCalendar} tone="violet">What to watch</CardTitle>
       <div className="card-sub">Upcoming USD/EUR-relevant releases and central bank events.</div>
 
       {upcoming.length === 0 ? (

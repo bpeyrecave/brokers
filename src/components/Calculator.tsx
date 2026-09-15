@@ -1,6 +1,8 @@
 import { useDashboard } from "../context/DashboardContext";
 import { convertWithFees, resolveTradingPoint } from "../lib/calculations";
 import { formatEUR } from "../lib/format";
+import { CardTitle } from "./CardTitle";
+import { IconCalculator } from "./icons";
 
 const PRESETS = [1000, 3000, 5000, 10000];
 
@@ -13,7 +15,7 @@ export function Calculator() {
   return (
     <div className="card calc-card">
       <div>
-        <h2 className="card-title">What do I get today?</h2>
+        <CardTitle icon={IconCalculator} tone="accent">What do I get today?</CardTitle>
         <div className="card-sub">Type any amount, or pick a preset — everything below updates with it.</div>
       </div>
 

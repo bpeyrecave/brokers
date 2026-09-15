@@ -3,6 +3,8 @@ import { useDashboard } from "../context/DashboardContext";
 import { convertMarket, resolveTradingPoint, whatIfExchangedOn } from "../lib/calculations";
 import { addDays, formatLong } from "../lib/dates";
 import { formatEUR, formatSignedEUR } from "../lib/format";
+import { CardTitle } from "./CardTitle";
+import { IconCalendar } from "./icons";
 
 export function WhatIfTool() {
   const { series, asOfIso, amount } = useDashboard();
@@ -25,7 +27,7 @@ export function WhatIfTool() {
 
   return (
     <div className="card">
-      <h2 className="card-title">What if I had exchanged?</h2>
+      <CardTitle icon={IconCalendar} tone="amber">What if I had exchanged?</CardTitle>
       <div className="card-sub">Pick any past date to see what your amount would have been worth.</div>
 
       <div className="whatif-controls">

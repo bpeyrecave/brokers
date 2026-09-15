@@ -1,4 +1,6 @@
 import { useDashboard } from "../context/DashboardContext";
+import { CardTitle } from "./CardTitle";
+import { IconCoffee } from "./icons";
 
 export function AIBrief() {
   const { brief } = useDashboard();
@@ -6,7 +8,7 @@ export function AIBrief() {
   if (!brief) {
     return (
       <div className="card brief-card">
-        <h2 className="card-title">☕ Today's FX Brief</h2>
+        <CardTitle icon={IconCoffee} tone="amber">Today's FX Brief</CardTitle>
         <p className="empty-state">The daily brief hasn't been generated yet. Everything else on this dashboard is unaffected.</p>
       </div>
     );
@@ -15,7 +17,7 @@ export function AIBrief() {
   if (!brief.ok) {
     return (
       <div className="card brief-card">
-        <h2 className="card-title">☕ Today's FX Brief</h2>
+        <CardTitle icon={IconCoffee} tone="amber">Today's FX Brief</CardTitle>
         <p className="empty-state">{brief.summary || "The daily brief is temporarily unavailable."}</p>
       </div>
     );
@@ -23,7 +25,7 @@ export function AIBrief() {
 
   return (
     <div className="card brief-card">
-      <h2 className="card-title">☕ Today's FX Brief</h2>
+      <CardTitle icon={IconCoffee} tone="amber">Today's FX Brief</CardTitle>
       <div className="brief-headline">{brief.headline}</div>
       <p className="brief-summary">{brief.summary}</p>
 

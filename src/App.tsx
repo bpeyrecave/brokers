@@ -1,5 +1,6 @@
-import { lazy, Suspense } from "react";
+import { lazy, Suspense, useMemo } from "react";
 import { DashboardProvider, useDashboard } from "./context/DashboardContext";
+import { Sidebar } from "./components/Sidebar";
 import { Header } from "./components/Header";
 import { RateHero } from "./components/RateHero";
 import { Calculator } from "./components/Calculator";
@@ -17,8 +18,15 @@ import { Footer } from "./components/Footer";
 
 const HistoryChart = lazy(() => import("./components/HistoryChart").then((m) => ({ default: m.HistoryChart })));
 
+const STALE_MS = 36 * 3600 * 1000;
+
 function DashboardBody() {
-  const { loading, error } = useDashboard();
+  const { loading, error, fetchedAt, events, brief } = useDashboard();
+
+  const dataStale = useMemo(
+    () => (!!fetchedAt && Date.now() - new Date(fetchedAt).getTime() > STALE_MS) || events?.ok === false || brief?.ok === false,
+    [fetchedAt, events, brief],
+  );
 
   if (loading) {
     return (
@@ -39,50 +47,54 @@ function DashboardBody() {
   }
 
   return (
-    <div className="page">
-      <div className="container">
-        <Header />
+    <div className="shell">
+      <Sidebar dataStale={dataStale} />
 
-        <div className="grid grid-hero">
-          <RateHero />
-          <Calculator />
+      <div className="main">
+        <Header dataStale={dataStale} />
+
+        <div className="container">
+          <section id="overview" className="section grid grid-hero">
+            <RateHero />
+            <Calculator />
+          </section>
+
+          <section id="benchmark" className="section grid grid-3">
+            <BenchmarkCard />
+            <DecisionCard />
+            <HodlCounter />
+          </section>
+
+          <section id="history" className="section">
+            <Suspense fallback={<div className="card chart-card">Loading chart…</div>}>
+              <HistoryChart />
+            </Suspense>
+          </section>
+
+          <section id="timing" className="section grid grid-2">
+            <TimeComparison />
+            <WhatIfTool />
+          </section>
+
+          <section id="brief" className="section grid grid-2">
+            <AIBrief />
+            <EventsTimeline />
+          </section>
+
+          <section id="fees" className="section">
+            <FeesToggle />
+          </section>
+
+          <section id="metrics" className="section">
+            <SmartMetrics />
+          </section>
+
+          <section id="log" className="section">
+            <ConversionLog />
+          </section>
+
+          <Footer />
         </div>
-
-        <div className="section grid grid-3">
-          <BenchmarkCard />
-          <DecisionCard />
-          <HodlCounter />
-        </div>
-
-        <div className="section">
-          <Suspense fallback={<div className="card chart-card">Loading chart…</div>}>
-            <HistoryChart />
-          </Suspense>
-        </div>
-
-        <div className="section grid grid-2">
-          <TimeComparison />
-          <WhatIfTool />
-        </div>
-
-        <div className="section grid grid-2">
-          <AIBrief />
-          <EventsTimeline />
-        </div>
-
-        <div className="section">
-          <FeesToggle />
-        </div>
-
-        <div className="section">
-          <SmartMetrics />
-        </div>
-
-        <div className="section">
-          <ConversionLog />
-        </div>
-
-        <Footer />
       </div>
     </div>
   );

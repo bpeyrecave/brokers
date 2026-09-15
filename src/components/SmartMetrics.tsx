@@ -2,6 +2,8 @@ import { useDashboard } from "../context/DashboardContext";
 import { buildSmartMetrics } from "../lib/calculations";
 import { formatEUR, formatRate, formatSignedEUR } from "../lib/format";
 import { formatShort } from "../lib/dates";
+import { CardTitle } from "./CardTitle";
+import { IconTarget } from "./icons";
 
 export function SmartMetrics() {
   const { series, asOfIso, amount } = useDashboard();
@@ -10,7 +12,7 @@ export function SmartMetrics() {
 
   return (
     <div className="card">
-      <h2 className="card-title">Is chasing the perfect rate worth it?</h2>
+      <CardTitle icon={IconTarget} tone="accent">Is chasing the perfect rate worth it?</CardTitle>
       <div className="card-sub">A few extra reference points to keep timing in perspective.</div>
 
       <div className="metric-list">

@@ -21,6 +21,8 @@ import {
 import { formatEUR, formatRate } from "../lib/format";
 import { formatLong, formatShort } from "../lib/dates";
 import type { FxPoint } from "../lib/types";
+import { CardTitle } from "./CardTitle";
+import { IconChart } from "./icons";
 
 const RANGES: ChartRange[] = ["1W", "1M", "3M", "6M", "YTD", "1Y"];
 
@@ -76,7 +78,7 @@ export function HistoryChart() {
   if (points.length === 0) {
     return (
       <div className="card chart-card">
-        <h2 className="card-title">Historical USD → EUR</h2>
+        <CardTitle icon={IconChart} tone="violet">Historical USD → EUR</CardTitle>
         <p className="empty-state">Not enough data yet for this range.</p>
       </div>
     );
@@ -86,7 +88,7 @@ export function HistoryChart() {
     <div className="card chart-card">
       <div className="chart-header">
         <div>
-          <h2 className="card-title">Historical USD → EUR</h2>
+          <CardTitle icon={IconChart} tone="violet">Historical USD → EUR</CardTitle>
           <div className="card-sub" style={{ marginBottom: 0 }}>
             How many euros $1 has bought over time. Dashed lines mark the 13th of each month — your organization's benchmark.
           </div>
@@ -116,8 +118,8 @@ export function HistoryChart() {
         <AreaChart data={points} margin={{ top: 10, right: 12, left: 0, bottom: 0 }}>
           <defs>
             <linearGradient id="fxFill" x1="0" y1="0" x2="0" y2="1">
-              <stop offset="0%" stopColor="var(--navy)" stopOpacity={0.22} />
-              <stop offset="100%" stopColor="var(--navy)" stopOpacity={0} />
+              <stop offset="0%" stopColor="var(--accent)" stopOpacity={0.22} />
+              <stop offset="100%" stopColor="var(--accent)" stopOpacity={0} />
             </linearGradient>
           </defs>
           <CartesianGrid strokeDasharray="3 3" stroke="var(--line-soft)" vertical={false} />
@@ -139,15 +141,15 @@ export function HistoryChart() {
           />
           <Tooltip content={<ChartTooltip amount={amount} />} />
           {thirteenthMarkers.map((d) => (
-            <ReferenceLine key={d} x={d} stroke="var(--gold)" strokeDasharray="4 3" strokeOpacity={0.8} />
+            <ReferenceLine key={d} x={d} stroke="var(--amber)" strokeDasharray="4 3" strokeOpacity={0.8} />
           ))}
-          <Area type="monotone" dataKey="rate" stroke="var(--navy)" strokeWidth={2} fill="url(#fxFill)" dot={false} activeDot={{ r: 4 }} />
+          <Area type="monotone" dataKey="rate" stroke="var(--accent)" strokeWidth={2} fill="url(#fxFill)" dot={false} activeDot={{ r: 4 }} />
           <ReferenceDot
             x={points[points.length - 1].date}
             y={points[points.length - 1].rate}
             r={4}
-            fill="var(--gold)"
-            stroke="var(--paper-raised)"
+            fill="var(--amber)"
+            stroke="var(--card)"
             strokeWidth={2}
           />
         </AreaChart>
@@ -155,12 +157,12 @@ export function HistoryChart() {
 
       <div className="chart-legend">
         <span>
-          <span className="dot" style={{ background: "var(--navy)" }} /> USD → EUR rate
+          <span className="dot" style={{ background: "var(--accent)" }} /> USD → EUR rate
         </span>
         <span>
-          <span className="dot" style={{ background: "var(--gold)" }} /> Current rate
+          <span className="dot" style={{ background: "var(--amber)" }} /> Current rate
         </span>
-        <span style={{ color: "var(--gold)" }}>┄ 13th of each month (organization benchmark)</span>
+        <span style={{ color: "var(--amber)" }}>┄ 13th of each month (organization benchmark)</span>
       </div>
     </div>
   );

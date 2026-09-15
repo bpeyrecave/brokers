@@ -3,6 +3,8 @@ import { buildTimeComparison } from "../lib/calculations";
 import { formatEUR, formatSignedEUR } from "../lib/format";
 import { formatShort } from "../lib/dates";
 import { InfoTooltip } from "./InfoTooltip";
+import { CardTitle } from "./CardTitle";
+import { IconClock } from "./icons";
 
 export function TimeComparison() {
   const { series, asOfIso, amount } = useDashboard();
@@ -13,10 +15,10 @@ export function TimeComparison() {
 
   return (
     <div className="card">
-      <h2 className="card-title">
+      <CardTitle icon={IconClock} tone="violet">
         Same ${amount.toLocaleString("en-US")}, different days
         <InfoTooltip text="Each row shows what your amount would convert to at that day's rate. When markets were closed (weekends/holidays), we use the nearest earlier trading day's rate." />
-      </h2>
+      </CardTitle>
       <div className="card-sub">Compare today against yesterday, last week, last month, and this month's organization benchmark.</div>
 
       <div className="tc-list">

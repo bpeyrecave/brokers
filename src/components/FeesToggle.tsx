@@ -1,15 +1,17 @@
 import { useDashboard } from "../context/DashboardContext";
 import { InfoTooltip } from "./InfoTooltip";
+import { CardTitle } from "./CardTitle";
+import { IconWallet } from "./icons";
 
 export function FeesToggle() {
   const { fees, setFees } = useDashboard();
 
   return (
     <div className="card">
-      <h2 className="card-title">
+      <CardTitle icon={IconWallet} tone="accent">
         Market rate or real conversion?
         <InfoTooltip text="Market rate mode uses the raw ECB reference rate everywhere on this page. Real conversion mode subtracts a provider markup and flat fee, so figures reflect what you'd actually receive through a service like Wise or your bank." />
-      </h2>
+      </CardTitle>
       <div className="card-sub">The theoretical rate isn't always what you actually receive after provider fees.</div>
 
       <div className="fees-bar">
