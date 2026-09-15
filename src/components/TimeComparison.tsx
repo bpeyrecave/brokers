@@ -19,7 +19,7 @@ export function TimeComparison() {
         Same ${amount.toLocaleString("en-US")}, different days
         <InfoTooltip text="Each row shows what your amount would convert to at that day's rate. When markets were closed (weekends/holidays), we use the nearest earlier trading day's rate." />
       </CardTitle>
-      <div className="card-sub">Compare today against yesterday, last week, last month, and this month's organization benchmark.</div>
+      <div className="card-sub">Compare today against yesterday, last week, last month, and this month's UN rate.</div>
 
       <div className="tc-list">
         {rows.map((row, i) => {

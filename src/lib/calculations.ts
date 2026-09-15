@@ -1,5 +1,5 @@
 import { addDays, daysBetween, monthKey, thirteenthOf, todayISO } from "./dates";
-import type { ConversionRecord, FavorabilityLabel, FeeSettings, FxPoint } from "./types";
+import type { FavorabilityLabel, FeeSettings, FxPoint } from "./types";
 
 export function convertMarket(usdAmount: number, rate: number): number {
   return usdAmount * rate;
@@ -405,47 +405,6 @@ export function buildSmartMetrics(series: FxPoint[], usdAmount: number, asOfIso:
     eurAtBestThisMonth,
     distanceFromHighEur: eurAtBestThisMonth - eurToday,
     bestVsThirteenthEur: eurAtBestThisMonth - benchmark.eurAtBenchmark,
-  };
-}
-
-export interface YearPerformance {
-  year: number;
-  count: number;
-  totalUsd: number;
-  eurActual: number;
-  eurIfAuto: number;
-  advantageEur: number;
-  avgAdvantagePerConversion: number;
-}
-
-export function evaluateConversions(
-  conversions: ConversionRecord[],
-  series: FxPoint[],
-  year: number,
-): YearPerformance {
-  const inYear = conversions.filter((c) => c.date.startsWith(String(year)));
-  let totalUsd = 0;
-  let eurActual = 0;
-  let eurIfAuto = 0;
-
-  for (const c of inYear) {
-    totalUsd += c.amountUsd;
-    eurActual += c.eurReceived;
-    const benchmarkIso = mostRecentThirteenthIso(c.date);
-    const resolved = resolveTradingPoint(series, benchmarkIso);
-    eurIfAuto += resolved ? convertMarket(c.amountUsd, resolved.point.rate) : c.eurReceived;
-  }
-
-  const advantageEur = eurActual - eurIfAuto;
-
-  return {
-    year,
-    count: inYear.length,
-    totalUsd,
-    eurActual,
-    eurIfAuto,
-    advantageEur,
-    avgAdvantagePerConversion: inYear.length > 0 ? advantageEur / inYear.length : 0,
   };
 }
 

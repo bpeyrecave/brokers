@@ -721,14 +721,6 @@
   letter-spacing: 0.03em;
 }
 
-.field-hint {
-  font-size: 0.7rem;
-  color: var(--ink-faint);
-  text-transform: none;
-  letter-spacing: normal;
-  font-weight: 400;
-}
-
 .field input,
 .field select {
   border: 1.5px solid var(--line);
@@ -885,66 +877,6 @@
   padding: 1rem 0;
 }
 
-/* ---------- conversion log ---------- */
-
-.log-summary {
-  display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  gap: 1rem;
-  margin-bottom: 1.25rem;
-}
-
-@media (max-width: 700px) {
-  .log-summary {
-    grid-template-columns: repeat(2, 1fr);
-  }
-}
-
-.log-summary .stat-label {
-  font-size: 0.75rem;
-  color: var(--ink-faint);
-}
-
-.log-summary .stat-value {
-  font-size: 1.2rem;
-  font-family: var(--font-display);
-}
-
-.log-verdict {
-  border-radius: var(--radius-md);
-  padding: 1rem 1.1rem;
-  margin-bottom: 1.25rem;
-  font-size: 0.92rem;
-  line-height: 1.5;
-}
-
-.log-form {
-  display: grid;
-  grid-template-columns: repeat(6, 1fr);
-  gap: 0.75rem;
-  align-items: end;
-  margin-bottom: 1.25rem;
-  padding: 1rem;
-  background: var(--card-raised);
-  border-radius: var(--radius-md);
-  border: 1px solid var(--line-soft);
-  min-width: 0;
-}
-
-.log-form > * {
-  min-width: 0;
-}
-
-@media (max-width: 900px) {
-  .log-form {
-    grid-template-columns: repeat(2, 1fr);
-  }
-}
-
-.log-form .field-note {
-  grid-column: 1 / -1;
-}
-
 .btn {
   border: none;
   border-radius: 10px;
@@ -954,67 +886,10 @@
   cursor: pointer;
 }
 
-.btn-primary {
-  background: var(--accent);
-  color: var(--accent-ink);
-}
-
-.btn-primary:hover {
-  background: var(--accent-strong);
-}
-
 .btn-ghost {
   background: transparent;
   border: 1px solid var(--line);
   color: var(--ink-soft);
-}
-
-.btn-danger-ghost {
-  background: transparent;
-  border: none;
-  color: var(--ink-faint);
-  font-size: 0.75rem;
-  cursor: pointer;
-  text-decoration: underline;
-}
-
-.log-table {
-  width: 100%;
-  border-collapse: collapse;
-  font-size: 0.85rem;
-}
-
-.log-table th {
-  text-align: left;
-  color: var(--ink-faint);
-  font-weight: 600;
-  font-size: 0.72rem;
-  text-transform: uppercase;
-  letter-spacing: 0.03em;
-  padding: 0.4rem 0.6rem;
-  border-bottom: 1px solid var(--line);
-}
-
-.log-table td {
-  padding: 0.55rem 0.6rem;
-  border-bottom: 1px solid var(--line-soft);
-}
-
-.log-table tr:last-child td {
-  border-bottom: none;
-}
-
-.storage-note {
-  display: flex;
-  gap: 0.5rem;
-  align-items: flex-start;
-  font-size: 0.78rem;
-  color: var(--ink-faint);
-  background: var(--card-raised);
-  border-radius: 10px;
-  padding: 0.65rem 0.85rem;
-  margin-top: 1rem;
-  border: 1px dashed var(--line);
 }
 
 /* ---------- smart metrics ---------- */

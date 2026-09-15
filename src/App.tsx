@@ -8,7 +8,6 @@ import { BenchmarkCard } from "./components/BenchmarkCard";
 import { WhatIfTool } from "./components/WhatIfTool";
 import { DecisionCard } from "./components/DecisionCard";
 import { AIBrief } from "./components/AIBrief";
-import { ConversionLog } from "./components/ConversionLog";
 import { SmartMetrics } from "./components/SmartMetrics";
 import { HodlCounter } from "./components/HodlCounter";
 import { YearlyBenchmark } from "./components/YearlyBenchmark";
@@ -83,10 +82,6 @@ function DashboardBody() {
 
           <section id="metrics" className="section">
             <SmartMetrics />
-          </section>
-
-          <section id="log" className="section">
-            <ConversionLog />
           </section>
 
           <Footer />

@@ -97,15 +97,6 @@ export function IconTarget(props: SVGProps<SVGSVGElement>) {
   );
 }
 
-export function IconList(props: SVGProps<SVGSVGElement>) {
-  return (
-    <svg {...base(props)}>
-      <path d="M8.5 6.5h11M8.5 12h11M8.5 17.5h11" />
-      <path d="M4.3 6.5h.01M4.3 12h.01M4.3 17.5h.01" strokeWidth="2.4" />
-    </svg>
-  );
-}
-
 export function IconBell(props: SVGProps<SVGSVGElement>) {
   return (
     <svg {...base(props)}>

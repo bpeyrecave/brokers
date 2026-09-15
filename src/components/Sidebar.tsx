@@ -7,7 +7,6 @@ import {
   IconClock,
   IconCoffee,
   IconGrid,
-  IconList,
   IconLogo,
   IconTarget,
 } from "./icons";
@@ -20,7 +19,6 @@ const NAV_ITEMS = [
   { id: "timing", label: "Timing tools", icon: IconCalendar },
   { id: "brief", label: "FX Brief", icon: IconCoffee },
   { id: "metrics", label: "Metrics", icon: IconTarget },
-  { id: "log", label: "Conversion log", icon: IconList },
 ];
 
 function scrollToSection(id: string) {

@@ -41,17 +41,6 @@ export interface FeeSettings {
   fixedFeeUsd: number;
 }
 
-export interface ConversionRecord {
-  id: string;
-  amountUsd: number;
-  date: string; // ISO yyyy-mm-dd, date converted
-  rate: number; // actual rate used (1 USD = rate EUR)
-  eurReceived: number; // actual EUR received, after fees
-  feesUsd: number; // total fees, expressed in USD-equivalent, for display
-  note?: string;
-  createdAt: string;
-}
-
 export type FavorabilityLabel =
   | "VERY_FAVORABLE"
   | "FAVORABLE"
