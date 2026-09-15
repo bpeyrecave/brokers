@@ -11,17 +11,29 @@ export interface ConversionResult {
   effectiveRate: number;
 }
 
+// Calibrated against a real Wise quote: sending a USD balance already held in
+// Wise to an external EUR bank account, $5,000 -> $15.01 fee (0.30%), no rate
+// markup. There's only one real data point to calibrate from, so both tiers
+// default to the same percentage (effectively flat) - lower feePercentAbove if
+// a quote at a larger amount ever shows the real step-down.
+export const WISE_FEES: FeeSettings = {
+  feePercentBelow: 0.3,
+  feePercentAbove: 0.3,
+  tierThresholdUsd: 1000,
+  fixedFeeUsd: 0,
+};
+
 /**
- * Applies the fee model on top of the market rate. In "market" mode, fees are
- * zero. In "wise" mode, the exchange rate itself is untouched (Wise converts
- * at the real mid-market rate) and instead a transparent fee is deducted from
- * the USD before conversion, matching how Wise actually charges. The
- * percentage fee is applied in two marginal tiers - like a tax bracket - since
- * Wise's real percentage fee gets cheaper as the amount grows: a higher rate
- * on the portion up to the threshold, a lower rate above it.
+ * Applies the Wise fee model on top of the market rate: the exchange rate
+ * itself is untouched (Wise converts at the real mid-market rate) and instead
+ * a transparent fee is deducted from the USD before conversion, matching how
+ * Wise actually charges. The percentage fee is applied in two marginal tiers -
+ * like a tax bracket - since Wise's real percentage fee gets cheaper as the
+ * amount grows: a higher rate on the portion up to the threshold, a lower
+ * rate above it.
  */
 export function convertWithFees(usdAmount: number, rate: number, fees: FeeSettings): ConversionResult {
-  if (fees.mode === "market" || usdAmount <= 0) {
+  if (usdAmount <= 0) {
     return { eur: convertMarket(usdAmount, rate), feesUsd: 0, effectiveRate: rate };
   }
   const belowAmount = Math.min(usdAmount, fees.tierThresholdUsd);
@@ -307,15 +319,27 @@ export function buildHodlSummary(series: FxPoint[], usdAmount: number, asOfIso: 
 export interface MonthlyBenchmarkRow {
   monthKey: string; // yyyy-mm
   dateRequested: string;
-  point: FxPoint;
+  point: FxPoint; // the benchmark (13th) point
   exact: boolean;
-  eur: number;
+  eur: number; // value at the benchmark rate
+  bestPoint: FxPoint; // the best rate available that same calendar month
+  bestEur: number; // value at that best rate
+  upsideEur: number; // bestEur - eur: what perfect timing would have added that month
+}
+
+function bestRateInMonth(series: FxPoint[], key: string): FxPoint | null {
+  let best: FxPoint | null = null;
+  for (const p of series) {
+    if (monthKey(p.date) === key && (!best || p.rate > best.rate)) best = p;
+  }
+  return best;
 }
 
 /**
  * The organization's 13th-of-the-month benchmark, applied to a fixed USD
  * amount, for each of the trailing `months` months ending at the most recent
- * 13th on or before `asOfIso`. Returned oldest first.
+ * 13th on or before `asOfIso` - alongside what the best rate available that
+ * same month would have given you. Returned oldest first.
  */
 export function buildMonthlyThirteenths(
   series: FxPoint[],
@@ -327,14 +351,21 @@ export function buildMonthlyThirteenths(
   let anchor = mostRecentThirteenthIso(asOfIso);
 
   for (let i = 0; i < months; i++) {
+    const key = monthKey(anchor);
     const resolved = resolveTradingPoint(series, anchor);
-    if (resolved) {
+    const best = bestRateInMonth(series, key);
+    if (resolved && best) {
+      const eur = convertMarket(usdAmount, resolved.point.rate);
+      const bestEur = convertMarket(usdAmount, best.rate);
       rows.push({
-        monthKey: monthKey(anchor),
+        monthKey: key,
         dateRequested: anchor,
         point: resolved.point,
         exact: resolved.exact,
-        eur: convertMarket(usdAmount, resolved.point.rate),
+        eur,
+        bestPoint: best,
+        bestEur,
+        upsideEur: bestEur - eur,
       });
     }
     anchor = previousThirteenthIso(anchor);

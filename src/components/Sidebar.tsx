@@ -10,7 +10,6 @@ import {
   IconList,
   IconLogo,
   IconTarget,
-  IconWallet,
 } from "./icons";
 
 const NAV_ITEMS = [
@@ -20,7 +19,6 @@ const NAV_ITEMS = [
   { id: "yearly", label: "A year of the 13th", icon: IconBars },
   { id: "timing", label: "Timing tools", icon: IconCalendar },
   { id: "brief", label: "FX Brief", icon: IconCoffee },
-  { id: "fees", label: "Fees", icon: IconWallet },
   { id: "metrics", label: "Metrics", icon: IconTarget },
   { id: "log", label: "Conversion log", icon: IconList },
 ];

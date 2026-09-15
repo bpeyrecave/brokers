@@ -1017,62 +1017,6 @@
   border: 1px dashed var(--line);
 }
 
-/* ---------- fees toggle ---------- */
-
-.fees-bar {
-  display: flex;
-  align-items: center;
-  gap: 1rem;
-  flex-wrap: wrap;
-}
-
-.mode-switch {
-  display: inline-flex;
-  background: var(--card-raised);
-  border: 1px solid var(--line);
-  border-radius: 999px;
-  padding: 0.2rem;
-}
-
-.mode-switch button {
-  border: none;
-  background: transparent;
-  padding: 0.4rem 0.85rem;
-  border-radius: 999px;
-  font-size: 0.82rem;
-  font-weight: 600;
-  color: var(--ink-faint);
-  cursor: pointer;
-}
-
-.mode-switch button.active {
-  background: var(--accent);
-  color: var(--accent-ink);
-}
-
-.fees-fields {
-  display: flex;
-  gap: 0.75rem;
-  flex-wrap: wrap;
-}
-
-.fees-fields .field input {
-  width: 7rem;
-}
-
-.fees-footnote {
-  margin-top: 1rem;
-  padding-top: 0.85rem;
-  border-top: 1px dashed var(--line);
-  font-size: 0.78rem;
-  color: var(--ink-faint);
-  line-height: 1.5;
-}
-
-.fees-footnote a {
-  color: var(--accent);
-}
-
 /* ---------- smart metrics ---------- */
 
 .metric-list {
@@ -1133,7 +1077,16 @@
 .bench-list {
   display: flex;
   flex-direction: column;
-  gap: 0.55rem;
+}
+
+.bench-month-group {
+  padding: 0.55rem 0 0.7rem;
+  border-bottom: 1px solid var(--line-soft);
+}
+
+.bench-month-group:last-child {
+  border-bottom: none;
+  padding-bottom: 0;
 }
 
 .bench-row {
@@ -1141,7 +1094,7 @@
   grid-template-columns: 5.5rem 1fr auto auto;
   align-items: center;
   gap: 0.85rem;
-  padding: 0.4rem 0;
+  padding: 0 0 0.3rem;
 }
 
 .bench-row.is-latest .bench-label,
@@ -1172,12 +1125,18 @@
   background: var(--violet);
 }
 
-.bench-bar-fill.is-best {
-  background: var(--accent);
+.bench-subrow {
+  font-size: 0.78rem;
+  color: var(--ink-faint);
+  border-left: 2px solid var(--line);
+  margin-left: 0.2rem;
+  padding-left: 0.6rem;
 }
 
-.bench-bar-fill.is-worst {
-  background: var(--red);
+.bench-upside {
+  color: var(--accent);
+  font-weight: 600;
+  margin-left: 0.2rem;
 }
 
 .bench-rate {

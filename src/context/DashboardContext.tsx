@@ -1,5 +1,5 @@
 import { createContext, useContext, useEffect, useMemo, useState, type ReactNode } from "react";
-import type { FxBrief, FxHistory, FxPoint, FeeSettings } from "../lib/types";
+import type { FxBrief, FxHistory, FxPoint } from "../lib/types";
 import { todayOrLatest } from "../lib/calculations";
 
 interface DashboardData {
@@ -11,24 +11,9 @@ interface DashboardData {
   asOfIso: string;
   amount: number;
   setAmount: (n: number) => void;
-  fees: FeeSettings;
-  setFees: (f: FeeSettings) => void;
 }
 
 const DashboardContext = createContext<DashboardData | null>(null);
-
-// Calibrated against a real Wise quote: sending a USD balance already held in
-// Wise to an external EUR bank account, $5,000 -> $15.01 fee (0.30%), no rate
-// markup. There's only one real data point to calibrate from, so both tiers
-// default to the same percentage (effectively flat) - adjust feePercentAbove
-// independently if you get a quote at a different amount showing it step down.
-const DEFAULT_FEES: FeeSettings = {
-  mode: "wise",
-  feePercentBelow: 0.3,
-  feePercentAbove: 0.3,
-  tierThresholdUsd: 1000,
-  fixedFeeUsd: 0,
-};
 
 async function fetchJson<T>(path: string): Promise<T | null> {
   try {
@@ -47,7 +32,6 @@ export function DashboardProvider({ children }: { children: ReactNode }) {
   const [fetchedAt, setFetchedAt] = useState<string | null>(null);
   const [brief, setBrief] = useState<FxBrief | null>(null);
   const [amount, setAmount] = useState(5000);
-  const [fees, setFees] = useState<FeeSettings>(DEFAULT_FEES);
 
   useEffect(() => {
     let cancelled = false;
@@ -79,8 +63,6 @@ export function DashboardProvider({ children }: { children: ReactNode }) {
     asOfIso,
     amount,
     setAmount,
-    fees,
-    setFees,
   };
 
   return <DashboardContext.Provider value={value}>{children}</DashboardContext.Provider>;

@@ -1,10 +1,10 @@
 import { useEffect, useMemo, useState, type FormEvent } from "react";
 import { useDashboard } from "../context/DashboardContext";
 import { conversionStore } from "../lib/storage";
-import { convertWithFees, evaluateConversions, resolveTradingPoint } from "../lib/calculations";
+import { WISE_FEES, convertWithFees, evaluateConversions, resolveTradingPoint } from "../lib/calculations";
 import { formatEUR, formatSignedEUR, formatUSD } from "../lib/format";
 import { formatLong, todayISO } from "../lib/dates";
-import type { ConversionRecord, FeeSettings } from "../lib/types";
+import type { ConversionRecord } from "../lib/types";
 import { CardTitle } from "./CardTitle";
 import { IconList } from "./icons";
 
@@ -12,35 +12,32 @@ function newId(): string {
   return typeof crypto !== "undefined" && "randomUUID" in crypto ? crypto.randomUUID() : `${Date.now()}-${Math.random()}`;
 }
 
-// The log always assumes a real Wise transfer, independent of the dashboard-wide
-// market/Wise toggle elsewhere - these entries are meant to record what actually happened.
-function autoFill(amountUsd: string, rate: string, wiseFees: FeeSettings) {
+function autoFill(amountUsd: string, rate: string) {
   const amt = Number(amountUsd) || 0;
   const r = Number(rate) || 0;
   if (amt <= 0 || r <= 0) return { eurReceived: "", feesUsd: "" };
-  const result = convertWithFees(amt, r, wiseFees);
+  const result = convertWithFees(amt, r, WISE_FEES);
   return { eurReceived: result.eur.toFixed(2), feesUsd: result.feesUsd.toFixed(2) };
 }
 
-function emptyForm(defaultDate: string, defaultRate: number, defaultAmount: number, wiseFees: FeeSettings) {
+function emptyForm(defaultDate: string, defaultRate: number, defaultAmount: number) {
   const amountUsd = String(defaultAmount || 5000);
   const rate = defaultRate ? defaultRate.toFixed(4) : "";
   return {
     amountUsd,
     date: defaultDate,
     rate,
-    ...autoFill(amountUsd, rate, wiseFees),
+    ...autoFill(amountUsd, rate),
     note: "",
   };
 }
 
 export function ConversionLog() {
-  const { series, asOfIso, amount, fees } = useDashboard();
+  const { series, asOfIso, amount } = useDashboard();
   const latestRate = series[series.length - 1]?.rate ?? 0;
-  const wiseFees: FeeSettings = { ...fees, mode: "wise" };
 
   const [conversions, setConversions] = useState<ConversionRecord[]>(() => conversionStore.list());
-  const [form, setForm] = useState(() => emptyForm(asOfIso, latestRate, amount, wiseFees));
+  const [form, setForm] = useState(() => emptyForm(asOfIso, latestRate, amount));
   const [autoTouched, setAutoTouched] = useState(false);
   const [amountTouched, setAmountTouched] = useState(false);
 
@@ -54,17 +51,17 @@ export function ConversionLog() {
     setForm((f) => {
       const amountUsd = String(amount || 5000);
       const next = { ...f, amountUsd };
-      if (!autoTouched) Object.assign(next, autoFill(amountUsd, next.rate, wiseFees));
+      if (!autoTouched) Object.assign(next, autoFill(amountUsd, next.rate));
       return next;
     });
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [amount, amountTouched, autoTouched, fees.feePercentBelow, fees.feePercentAbove, fees.tierThresholdUsd, fees.fixedFeeUsd]);
+  }, [amount, amountTouched, autoTouched]);
 
   function updateField<K extends keyof typeof form>(key: K, value: string) {
     setForm((f) => {
       const next = { ...f, [key]: value };
       if (!autoTouched && (key === "amountUsd" || key === "rate")) {
-        Object.assign(next, autoFill(next.amountUsd, next.rate, wiseFees));
+        Object.assign(next, autoFill(next.amountUsd, next.rate));
       }
       return next;
     });
@@ -75,7 +72,7 @@ export function ConversionLog() {
     setForm((f) => {
       const rate = resolved ? resolved.point.rate.toFixed(4) : f.rate;
       const next = { ...f, date, rate };
-      if (!autoTouched) Object.assign(next, autoFill(next.amountUsd, rate, wiseFees));
+      if (!autoTouched) Object.assign(next, autoFill(next.amountUsd, rate));
       return next;
     });
   }
@@ -100,7 +97,7 @@ export function ConversionLog() {
     };
     conversionStore.add(record);
     setConversions(conversionStore.list());
-    setForm(emptyForm(asOfIso, latestRate, amount, wiseFees));
+    setForm(emptyForm(asOfIso, latestRate, amount));
     setAutoTouched(false);
     setAmountTouched(false);
   }

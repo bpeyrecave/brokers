@@ -1,7 +1,7 @@
 import { useDashboard } from "../context/DashboardContext";
 import { addDays } from "../lib/dates";
 import { formatEUR, formatRate, formatSignedPercent, formatUSD } from "../lib/format";
-import { convertWithFees, percentChange, resolveTradingPoint } from "../lib/calculations";
+import { WISE_FEES, convertWithFees, percentChange, resolveTradingPoint } from "../lib/calculations";
 
 function DeltaPill({ label, changePercent }: { label: string; changePercent: number | null }) {
   if (changePercent === null) return null;
@@ -15,7 +15,7 @@ function DeltaPill({ label, changePercent }: { label: string; changePercent: num
 }
 
 export function RateHero() {
-  const { series, asOfIso, amount, setAmount, fees } = useDashboard();
+  const { series, asOfIso, amount, setAmount } = useDashboard();
 
   const current = resolveTradingPoint(series, asOfIso);
   const prevDay = resolveTradingPoint(series, addDays(asOfIso, -1));
@@ -36,7 +36,7 @@ export function RateHero() {
         ? "The dollar is weakening against the euro right now."
         : "The dollar has been roughly stable against the euro lately.";
 
-  const result = convertWithFees(amount, current.point.rate, fees);
+  const result = convertWithFees(amount, current.point.rate, WISE_FEES);
 
   return (
     <div className="hero-card">
@@ -75,7 +75,7 @@ export function RateHero() {
 
         <div>
           <div className="hero-result num">{formatEUR(result.eur)}</div>
-          {fees.mode === "wise" && result.feesUsd > 0 && (
+          {result.feesUsd > 0 && (
             <div className="hero-fee-note">Wise fee: {formatUSD(result.feesUsd)} · rate used is the real mid-market rate, no markup</div>
           )}
         </div>

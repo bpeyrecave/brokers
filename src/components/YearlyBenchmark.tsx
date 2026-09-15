@@ -1,8 +1,8 @@
 import { useMemo } from "react";
 import { useDashboard } from "../context/DashboardContext";
 import { buildMonthlyThirteenths } from "../lib/calculations";
-import { formatEUR, formatRate } from "../lib/format";
-import { formatMonthShortYear } from "../lib/dates";
+import { formatEUR, formatRate, formatSignedEUR } from "../lib/format";
+import { formatMonthShortYear, formatShort } from "../lib/dates";
 import { CardTitle } from "./CardTitle";
 import { IconBars } from "./icons";
 import { InfoTooltip } from "./InfoTooltip";
@@ -13,10 +13,11 @@ export function YearlyBenchmark() {
   const rows = useMemo(() => buildMonthlyThirteenths(series, amount, asOfIso, 12), [series, amount, asOfIso]);
   if (rows.length === 0) return null;
 
+  const totalBenchmark = rows.reduce((s, r) => s + r.eur, 0);
+  const totalBest = rows.reduce((s, r) => s + r.bestEur, 0);
+  const totalUpside = totalBest - totalBenchmark;
+
   const values = rows.map((r) => r.eur);
-  const avg = values.reduce((s, v) => s + v, 0) / values.length;
-  const best = rows.reduce((a, b) => (b.eur > a.eur ? b : a));
-  const worst = rows.reduce((a, b) => (b.eur < a.eur ? b : a));
   const min = Math.min(...values);
   const max = Math.max(...values);
   const range = Math.max(max - min, 0.01);
@@ -25,26 +26,28 @@ export function YearlyBenchmark() {
   return (
     <div className="card">
       <CardTitle icon={IconBars} tone="accent">
-        A year of the 13th
-        <InfoTooltip text="What your chosen USD amount would have been worth if converted on the organization's benchmark date (the 13th, or nearest trading day) each month, for the last 12 months. Uses the raw market rate, no fees." />
+        When UN sends your salary vs. the best rate that month
+        <InfoTooltip text="For each of the last 12 months: what your chosen USD amount was worth converted on the organization's benchmark date (the 13th, or nearest trading day) versus what it would have been worth converted on that month's single best USD→EUR day. Uses the raw market rate, no fees." />
       </CardTitle>
       <div className="card-sub">
-        ${amount.toLocaleString("en-US")} converted on the 13th of every month for the last year — this is what the
-        automatic option alone would have given you each month.
+        ${amount.toLocaleString("en-US")} on the 13th of every month for the last year, compared with the best rate
+        that same month — this is the most you could have squeezed out by timing it perfectly.
       </div>
 
       <div className="bench-summary">
         <div>
-          <div className="stat-label">Average</div>
-          <div className="stat-value num">{formatEUR(avg)}</div>
+          <div className="stat-label">UN's rate (12 months)</div>
+          <div className="stat-value num">{formatEUR(totalBenchmark)}</div>
         </div>
         <div>
-          <div className="stat-label">Best month ({formatMonthShortYear(best.dateRequested)})</div>
-          <div className="stat-value num">{formatEUR(best.eur)}</div>
+          <div className="stat-label">Best rate (12 months)</div>
+          <div className="stat-value num">{formatEUR(totalBest)}</div>
         </div>
         <div>
-          <div className="stat-label">Worst month ({formatMonthShortYear(worst.dateRequested)})</div>
-          <div className="stat-value num">{formatEUR(worst.eur)}</div>
+          <div className="stat-label">Annual upside from perfect timing</div>
+          <div className="stat-value num delta-up" style={{ display: "inline-block", padding: "0.1rem 0.5rem", borderRadius: 8 }}>
+            {formatSignedEUR(totalUpside)}
+          </div>
         </div>
       </div>
 
@@ -52,22 +55,24 @@ export function YearlyBenchmark() {
         {rows.map((row) => {
           const widthPct = 8 + ((row.eur - min) / range) * 92;
           const isLatest = row.monthKey === latestMonthKey;
-          const isBest = row.monthKey === best.monthKey;
-          const isWorst = row.monthKey === worst.monthKey;
           return (
-            <div className={`bench-row${isLatest ? " is-latest" : ""}`} key={row.monthKey}>
-              <div className="bench-label">
-                {formatMonthShortYear(row.dateRequested)}
-                {!row.exact && <span className="bench-note"> · nearest trading day</span>}
+            <div className="bench-month-group" key={row.monthKey}>
+              <div className={`bench-row${isLatest ? " is-latest" : ""}`}>
+                <div className="bench-label">
+                  {formatMonthShortYear(row.dateRequested)}
+                  {!row.exact && <span className="bench-note"> · nearest trading day</span>}
+                </div>
+                <div className="bench-bar-track">
+                  <div className="bench-bar-fill" style={{ width: `${widthPct}%` }} />
+                </div>
+                <div className="bench-rate num">€{formatRate(row.point.rate)}</div>
+                <div className="bench-value num">{formatEUR(row.eur)}</div>
               </div>
-              <div className="bench-bar-track">
-                <div
-                  className={`bench-bar-fill${isBest ? " is-best" : ""}${isWorst ? " is-worst" : ""}`}
-                  style={{ width: `${widthPct}%` }}
-                />
+              <div className="bench-subrow">
+                Best that month ({formatShort(row.bestPoint.date)}, €{formatRate(row.bestPoint.rate)}):{" "}
+                <strong className="num">{formatEUR(row.bestEur)}</strong>{" "}
+                <span className="bench-upside num">{formatSignedEUR(row.upsideEur)}</span>
               </div>
-              <div className="bench-rate num">€{formatRate(row.point.rate)}</div>
-              <div className="bench-value num">{formatEUR(row.eur)}</div>
             </div>
           );
         })}

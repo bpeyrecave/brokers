@@ -22,8 +22,6 @@ export interface FxBrief {
   forYou: string;
 }
 
-export type FeeMode = "market" | "wise";
-
 /**
  * Wise (and providers like it) don't mark up the exchange rate itself - you get
  * the real mid-market rate - they charge a transparent fee instead: a small flat
@@ -33,7 +31,6 @@ export type FeeMode = "market" | "wise";
  * percentage on the portion above it.
  */
 export interface FeeSettings {
-  mode: FeeMode;
   /** Fee percentage applied to the portion of the amount up to tierThresholdUsd. */
   feePercentBelow: number;
   /** Fee percentage applied to the portion of the amount above tierThresholdUsd. */

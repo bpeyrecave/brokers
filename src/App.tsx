@@ -9,7 +9,6 @@ import { WhatIfTool } from "./components/WhatIfTool";
 import { DecisionCard } from "./components/DecisionCard";
 import { AIBrief } from "./components/AIBrief";
 import { ConversionLog } from "./components/ConversionLog";
-import { FeesToggle } from "./components/FeesToggle";
 import { SmartMetrics } from "./components/SmartMetrics";
 import { HodlCounter } from "./components/HodlCounter";
 import { YearlyBenchmark } from "./components/YearlyBenchmark";
@@ -80,10 +79,6 @@ function DashboardBody() {
 
           <section id="brief" className="section">
             <AIBrief />
-          </section>
-
-          <section id="fees" className="section">
-            <FeesToggle />
           </section>
 
           <section id="metrics" className="section">
