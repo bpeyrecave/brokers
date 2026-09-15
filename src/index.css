@@ -83,6 +83,7 @@ input {
 .num {
   font-variant-numeric: tabular-nums;
   font-feature-settings: "tnum" 1;
+  overflow-wrap: anywhere;
 }
 
 ::selection {
