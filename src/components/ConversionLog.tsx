@@ -1,10 +1,10 @@
 import { useMemo, useState, type FormEvent } from "react";
 import { useDashboard } from "../context/DashboardContext";
 import { conversionStore } from "../lib/storage";
-import { evaluateConversions, resolveTradingPoint } from "../lib/calculations";
+import { convertWithFees, evaluateConversions, resolveTradingPoint } from "../lib/calculations";
 import { formatEUR, formatSignedEUR, formatUSD } from "../lib/format";
 import { formatLong, todayISO } from "../lib/dates";
-import type { ConversionRecord } from "../lib/types";
+import type { ConversionRecord, FeeSettings } from "../lib/types";
 import { CardTitle } from "./CardTitle";
 import { IconList } from "./icons";
 
@@ -12,24 +12,36 @@ function newId(): string {
   return typeof crypto !== "undefined" && "randomUUID" in crypto ? crypto.randomUUID() : `${Date.now()}-${Math.random()}`;
 }
 
-function emptyForm(defaultDate: string, defaultRate: number) {
+// The log always assumes a real Wise transfer, independent of the dashboard-wide
+// market/Wise toggle elsewhere - these entries are meant to record what actually happened.
+function autoFill(amountUsd: string, rate: string, wiseFees: FeeSettings) {
+  const amt = Number(amountUsd) || 0;
+  const r = Number(rate) || 0;
+  if (amt <= 0 || r <= 0) return { eurReceived: "", feesUsd: "" };
+  const result = convertWithFees(amt, r, wiseFees);
+  return { eurReceived: result.eur.toFixed(2), feesUsd: result.feesUsd.toFixed(2) };
+}
+
+function emptyForm(defaultDate: string, defaultRate: number, wiseFees: FeeSettings) {
+  const amountUsd = "5000";
+  const rate = defaultRate ? defaultRate.toFixed(4) : "";
   return {
-    amountUsd: "5000",
+    amountUsd,
     date: defaultDate,
-    rate: defaultRate ? defaultRate.toFixed(4) : "",
-    eurReceived: defaultRate ? (5000 * defaultRate).toFixed(2) : "",
-    feesUsd: "0",
+    rate,
+    ...autoFill(amountUsd, rate, wiseFees),
     note: "",
   };
 }
 
 export function ConversionLog() {
-  const { series, asOfIso } = useDashboard();
+  const { series, asOfIso, fees } = useDashboard();
   const latestRate = series[series.length - 1]?.rate ?? 0;
+  const wiseFees: FeeSettings = { mode: "wise", feePercent: fees.feePercent, fixedFeeUsd: fees.fixedFeeUsd };
 
   const [conversions, setConversions] = useState<ConversionRecord[]>(() => conversionStore.list());
-  const [form, setForm] = useState(() => emptyForm(asOfIso, latestRate));
-  const [eurTouched, setEurTouched] = useState(false);
+  const [form, setForm] = useState(() => emptyForm(asOfIso, latestRate, wiseFees));
+  const [autoTouched, setAutoTouched] = useState(false);
 
   const year = Number(asOfIso.slice(0, 4)) || new Date().getFullYear();
   const performance = useMemo(() => evaluateConversions(conversions, series, year), [conversions, series, year]);
@@ -37,10 +49,8 @@ export function ConversionLog() {
   function updateField<K extends keyof typeof form>(key: K, value: string) {
     setForm((f) => {
       const next = { ...f, [key]: value };
-      if (!eurTouched && (key === "amountUsd" || key === "rate")) {
-        const amt = Number(next.amountUsd) || 0;
-        const rate = Number(next.rate) || 0;
-        next.eurReceived = amt > 0 && rate > 0 ? (amt * rate).toFixed(2) : "";
+      if (!autoTouched && (key === "amountUsd" || key === "rate")) {
+        Object.assign(next, autoFill(next.amountUsd, next.rate, wiseFees));
       }
       return next;
     });
@@ -48,7 +58,12 @@ export function ConversionLog() {
 
   function handleDateChange(date: string) {
     const resolved = resolveTradingPoint(series, date);
-    setForm((f) => ({ ...f, date, rate: resolved ? resolved.point.rate.toFixed(4) : f.rate }));
+    setForm((f) => {
+      const rate = resolved ? resolved.point.rate.toFixed(4) : f.rate;
+      const next = { ...f, date, rate };
+      if (!autoTouched) Object.assign(next, autoFill(next.amountUsd, rate, wiseFees));
+      return next;
+    });
   }
 
   function handleSubmit(e: FormEvent) {
@@ -71,8 +86,8 @@ export function ConversionLog() {
     };
     conversionStore.add(record);
     setConversions(conversionStore.list());
-    setForm(emptyForm(asOfIso, latestRate));
-    setEurTouched(false);
+    setForm(emptyForm(asOfIso, latestRate, wiseFees));
+    setAutoTouched(false);
   }
 
   function handleRemove(id: string) {
@@ -150,15 +165,27 @@ export function ConversionLog() {
             min={0}
             value={form.eurReceived}
             onChange={(e) => {
-              setEurTouched(true);
+              setAutoTouched(true);
               setForm((f) => ({ ...f, eurReceived: e.target.value }));
             }}
             required
           />
+          {!autoTouched && <span className="field-hint">Amount × rate, minus the Wise fee</span>}
         </div>
         <div className="field">
           <label htmlFor="log-fees">Fees (USD)</label>
-          <input id="log-fees" type="number" step="0.01" min={0} value={form.feesUsd} onChange={(e) => updateField("feesUsd", e.target.value)} />
+          <input
+            id="log-fees"
+            type="number"
+            step="0.01"
+            min={0}
+            value={form.feesUsd}
+            onChange={(e) => {
+              setAutoTouched(true);
+              setForm((f) => ({ ...f, feesUsd: e.target.value }));
+            }}
+          />
+          {!autoTouched && <span className="field-hint">Auto-filled from your Wise fee settings above</span>}
         </div>
         <button type="submit" className="btn btn-primary">
           Add conversion
