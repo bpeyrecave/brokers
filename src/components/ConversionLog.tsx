@@ -1,4 +1,4 @@
-import { useMemo, useState, type FormEvent } from "react";
+import { useEffect, useMemo, useState, type FormEvent } from "react";
 import { useDashboard } from "../context/DashboardContext";
 import { conversionStore } from "../lib/storage";
 import { convertWithFees, evaluateConversions, resolveTradingPoint } from "../lib/calculations";
@@ -22,8 +22,8 @@ function autoFill(amountUsd: string, rate: string, wiseFees: FeeSettings) {
   return { eurReceived: result.eur.toFixed(2), feesUsd: result.feesUsd.toFixed(2) };
 }
 
-function emptyForm(defaultDate: string, defaultRate: number, wiseFees: FeeSettings) {
-  const amountUsd = "5000";
+function emptyForm(defaultDate: string, defaultRate: number, defaultAmount: number, wiseFees: FeeSettings) {
+  const amountUsd = String(defaultAmount || 5000);
   const rate = defaultRate ? defaultRate.toFixed(4) : "";
   return {
     amountUsd,
@@ -35,16 +35,30 @@ function emptyForm(defaultDate: string, defaultRate: number, wiseFees: FeeSettin
 }
 
 export function ConversionLog() {
-  const { series, asOfIso, fees } = useDashboard();
+  const { series, asOfIso, amount, fees } = useDashboard();
   const latestRate = series[series.length - 1]?.rate ?? 0;
   const wiseFees: FeeSettings = { ...fees, mode: "wise" };
 
   const [conversions, setConversions] = useState<ConversionRecord[]>(() => conversionStore.list());
-  const [form, setForm] = useState(() => emptyForm(asOfIso, latestRate, wiseFees));
+  const [form, setForm] = useState(() => emptyForm(asOfIso, latestRate, amount, wiseFees));
   const [autoTouched, setAutoTouched] = useState(false);
+  const [amountTouched, setAmountTouched] = useState(false);
 
   const year = Number(asOfIso.slice(0, 4)) || new Date().getFullYear();
   const performance = useMemo(() => evaluateConversions(conversions, series, year), [conversions, series, year]);
+
+  // Until the user edits the amount field directly, keep this form's amount in
+  // sync with the "amount to exchange" picked elsewhere on the dashboard.
+  useEffect(() => {
+    if (amountTouched) return;
+    setForm((f) => {
+      const amountUsd = String(amount || 5000);
+      const next = { ...f, amountUsd };
+      if (!autoTouched) Object.assign(next, autoFill(amountUsd, next.rate, wiseFees));
+      return next;
+    });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [amount, amountTouched, autoTouched, fees.feePercentBelow, fees.feePercentAbove, fees.tierThresholdUsd, fees.fixedFeeUsd]);
 
   function updateField<K extends keyof typeof form>(key: K, value: string) {
     setForm((f) => {
@@ -86,8 +100,9 @@ export function ConversionLog() {
     };
     conversionStore.add(record);
     setConversions(conversionStore.list());
-    setForm(emptyForm(asOfIso, latestRate, wiseFees));
+    setForm(emptyForm(asOfIso, latestRate, amount, wiseFees));
     setAutoTouched(false);
+    setAmountTouched(false);
   }
 
   function handleRemove(id: string) {
@@ -146,7 +161,18 @@ export function ConversionLog() {
       <form className="log-form" onSubmit={handleSubmit}>
         <div className="field">
           <label htmlFor="log-amount">Amount (USD)</label>
-          <input id="log-amount" type="number" min={0} value={form.amountUsd} onChange={(e) => updateField("amountUsd", e.target.value)} required />
+          <input
+            id="log-amount"
+            type="number"
+            min={0}
+            value={form.amountUsd}
+            onChange={(e) => {
+              setAmountTouched(true);
+              updateField("amountUsd", e.target.value);
+            }}
+            required
+          />
+          {!amountTouched && <span className="field-hint">Follows the amount picked above</span>}
         </div>
         <div className="field">
           <label htmlFor="log-date">Date converted</label>
