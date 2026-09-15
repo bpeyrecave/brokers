@@ -1,0 +1,8 @@
+{
+  "ok": false,
+  "generatedAt": "2026-09-15T07:30:40.959Z",
+  "headline": "Today's brief isn't available right now.",
+  "summary": "The automated FX news summary hasn't run yet, or the ANTHROPIC_API_KEY secret isn't configured for this repository. Everything else on the dashboard — rates, calculators, charts and history — uses live currency data and is unaffected.",
+  "whatMattersNext": [],
+  "forYou": ""
+}
