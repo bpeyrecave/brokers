@@ -34,10 +34,11 @@ It is not a trading tool, not investment advice, and it does not predict future 
 10. **Market rate vs. Wise** — since Victor & Berta always convert through [Wise](https://wise.com), that's the
     default: Wise uses the real mid-market rate (no hidden markup) and charges a transparent fee instead, so the
     toggle deducts a fee from every "what do I actually get" figure instead of touching the rate. The fee is modeled
-    in two marginal tiers, since Wise's real percentage fee gets cheaper as the amount grows — a higher percentage
-    on the portion up to an editable threshold, a lower one above it — plus a small flat fee. A "Market rate" option
-    is still there for comparison. Defaults approximate a typical USD→EUR bank-funded Wise transfer — edit the fee
-    fields to match your actual Wise quote.
+    in two marginal tiers, since Wise's real percentage fee can get cheaper as the amount grows — a percentage on
+    the portion up to an editable threshold, a (potentially lower) percentage above it — plus a small flat fee. A
+    "Market rate" option is still there for comparison. Defaults are calibrated from a real quote (sending a USD
+    balance already in Wise to an external EUR bank account: $5,000 → $15.01, 0.30%) rather than a generic estimate
+    — edit the fee fields whenever your actual Wise quote differs.
 11. **Smart extra metrics** — 30/90-day averages, best/worst rate this month, distance from the monthly high, and
     what perfect timing would have been worth vs. the 13th — mostly to show that chasing the "perfect" day usually
     isn't worth obsessing over.

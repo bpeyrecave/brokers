@@ -17,17 +17,17 @@ interface DashboardData {
 
 const DashboardContext = createContext<DashboardData | null>(null);
 
-// Defaults approximate a typical USD->EUR Wise transfer via bank/ACH funding
-// (their cheapest option): no rate markup, and a percentage fee that steps
-// down above $1,000 (roughly matching Wise's own published examples: ~0.55%
-// on a $1,000 send, ~0.43% blended on a $5,000 send) plus a small flat fee.
-// Actual fees vary by amount and funding method - check wise.com for an exact quote.
+// Calibrated against a real Wise quote: sending a USD balance already held in
+// Wise to an external EUR bank account, $5,000 -> $15.01 fee (0.30%), no rate
+// markup. There's only one real data point to calibrate from, so both tiers
+// default to the same percentage (effectively flat) - adjust feePercentAbove
+// independently if you get a quote at a different amount showing it step down.
 const DEFAULT_FEES: FeeSettings = {
   mode: "wise",
-  feePercentBelow: 0.55,
-  feePercentAbove: 0.4,
+  feePercentBelow: 0.3,
+  feePercentAbove: 0.3,
   tierThresholdUsd: 1000,
-  fixedFeeUsd: 0.2,
+  fixedFeeUsd: 0,
 };
 
 async function fetchJson<T>(path: string): Promise<T | null> {

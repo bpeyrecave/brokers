@@ -79,12 +79,13 @@ export function FeesToggle() {
 
       {fees.mode === "wise" && (
         <p className="fees-footnote">
-          Defaults approximate a typical USD→EUR Wise transfer funded by bank/ACH, where the fee percentage steps
-          down above the threshold. Your actual fee depends on the amount and funding method — check{" "}
+          Defaults are calibrated from a real quote: sending a USD balance already in Wise to an external EUR bank
+          account, $5,000 → $15.01 (0.30%). That's only one data point, so both tiers start out equal — if you get a
+          quote at a different amount and it's cheaper per dollar, lower "Fee above threshold" to match. Check{" "}
           <a href="https://wise.com/us/send-money/" target="_blank" rel="noreferrer">
             wise.com
           </a>{" "}
-          for an exact quote and update the numbers above to match.
+          any time you want to re-verify.
         </p>
       )}
     </div>
