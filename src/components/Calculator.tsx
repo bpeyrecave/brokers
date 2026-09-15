@@ -1,6 +1,6 @@
 import { useDashboard } from "../context/DashboardContext";
 import { convertWithFees, resolveTradingPoint } from "../lib/calculations";
-import { formatEUR } from "../lib/format";
+import { formatEUR, formatUSD } from "../lib/format";
 import { CardTitle } from "./CardTitle";
 import { IconCalculator } from "./icons";
 
@@ -48,8 +48,11 @@ export function Calculator() {
       {result && (
         <div className="calc-result">
           If you exchange ${amount.toLocaleString("en-US")} today
-          {fees.mode === "real" ? " (after fees)" : ""} →
+          {fees.mode === "wise" ? " via Wise" : ""} →
           <strong className="num">{formatEUR(result.eur)}</strong>
+          {fees.mode === "wise" && result.feesUsd > 0 && (
+            <span className="calc-fee-note">Wise fee: {formatUSD(result.feesUsd)} · rate used is the real mid-market rate, no markup</span>
+          )}
         </div>
       )}
     </div>

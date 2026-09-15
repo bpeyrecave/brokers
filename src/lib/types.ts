@@ -41,13 +41,18 @@ export interface FxBrief {
   forYou: string;
 }
 
-export type FeeMode = "market" | "real";
+export type FeeMode = "market" | "wise";
 
+/**
+ * Wise (and providers like it) don't mark up the exchange rate itself - you get
+ * the real mid-market rate - they charge a transparent fee instead: a small
+ * percentage of the amount sent, plus sometimes a small flat fee.
+ */
 export interface FeeSettings {
   mode: FeeMode;
-  /** Percentage points shaved off the market rate as provider markup, e.g. 0.4 for 0.4%. */
-  markupPercent: number;
-  /** Flat fee per conversion, in USD. */
+  /** Wise's fee as a percentage of the USD amount, e.g. 0.41 for 0.41%. */
+  feePercent: number;
+  /** Flat fee per transfer, in USD. */
   fixedFeeUsd: number;
 }
 

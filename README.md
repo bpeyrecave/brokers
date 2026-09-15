@@ -33,9 +33,11 @@ It is not a trading tool, not investment advice, and it does not predict future 
    HIGH/MEDIUM/LOW relevance tag and a one-line explanation for each.
 10. **"Was the headache worth it?"** — log your real conversions (amount, date, rate, EUR received, fees, note) and
     compare your actual results year-to-date against simply converting on the 13th every time.
-11. **Market rate vs. real conversion** — a global toggle that layers a provider markup % and flat fee onto every
-    "what do I actually get" figure, so you can see the theoretical FX move separately from what a provider like
-    Wise or your bank would actually hand you.
+11. **Market rate vs. Wise** — since Victor & Berta always convert through [Wise](https://wise.com), that's the
+    default: Wise uses the real mid-market rate (no hidden markup) and charges a transparent fee instead, so the
+    toggle deducts a percentage + flat fee from every "what do I actually get" figure instead of touching the rate.
+    A "Market rate" option is still there for comparison. Defaults approximate a typical USD→EUR bank-funded Wise
+    transfer — edit the fee fields to match your actual Wise quote.
 12. **Smart extra metrics** — 30/90-day averages, best/worst rate this month, distance from the monthly high, and
     what perfect timing would have been worth vs. the 13th — mostly to show that chasing the "perfect" day usually
     isn't worth obsessing over.
@@ -80,11 +82,15 @@ working.
 
 ### Why fees are handled the way they are
 
-The "market rate vs. real conversion" toggle only changes figures about **how many EUR you actually receive right
-now** (the calculator, and your logged conversions). It intentionally does *not* change the timing-comparison cards
-(You vs. the 13th, Should I exchange today, HODL counter, Smart metrics) — a provider's markup/fee applies about
-equally no matter which day you convert on, so it mostly cancels out of "is today better than the 13th" questions.
-Keeping those cards on the raw market rate keeps the timing analysis honest and comparable day to day.
+The "market rate vs. Wise" toggle only changes figures about **how many EUR you actually receive right now** (the
+calculator, and your logged conversions). It intentionally does *not* change the timing-comparison cards (You vs.
+the 13th, Should I exchange today, HODL counter, Smart metrics) — Wise's fee applies about equally no matter which
+day you convert on, so it mostly cancels out of "is today better than the 13th" questions. Keeping those cards on
+the raw market rate keeps the timing analysis honest and comparable day to day.
+
+Also, because Wise converts at the real mid-market rate rather than marking it up, the fee toggle deducts a
+percentage + flat fee from the USD amount before conversion — it never touches the rate itself. That's different
+from how a bank's "we'll give you our special rate" markup works, and is the whole reason Wise tends to be cheaper.
 
 ### Code structure
 

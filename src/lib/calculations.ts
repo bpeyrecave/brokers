@@ -11,15 +11,21 @@ export interface ConversionResult {
   effectiveRate: number;
 }
 
-/** Applies the fee model on top of the market rate. In "market" mode, fees are zero. */
+/**
+ * Applies the fee model on top of the market rate. In "market" mode, fees are
+ * zero. In "wise" mode, the exchange rate itself is untouched (Wise converts
+ * at the real mid-market rate) and instead a transparent fee - a percentage
+ * of the amount plus a small flat fee - is deducted from the USD before
+ * conversion, matching how Wise actually charges.
+ */
 export function convertWithFees(usdAmount: number, rate: number, fees: FeeSettings): ConversionResult {
   if (fees.mode === "market" || usdAmount <= 0) {
     return { eur: convertMarket(usdAmount, rate), feesUsd: 0, effectiveRate: rate };
   }
-  const usdAfterFixedFee = Math.max(usdAmount - fees.fixedFeeUsd, 0);
-  const effectiveRate = rate * (1 - fees.markupPercent / 100);
-  const eur = usdAfterFixedFee * effectiveRate;
-  return { eur, feesUsd: fees.fixedFeeUsd, effectiveRate };
+  const feesUsd = usdAmount * (fees.feePercent / 100) + fees.fixedFeeUsd;
+  const usdAfterFees = Math.max(usdAmount - feesUsd, 0);
+  const eur = usdAfterFees * rate;
+  return { eur, feesUsd, effectiveRate: rate };
 }
 
 function findExact(series: FxPoint[], iso: string): FxPoint | undefined {

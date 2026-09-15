@@ -18,7 +18,10 @@ interface DashboardData {
 
 const DashboardContext = createContext<DashboardData | null>(null);
 
-const DEFAULT_FEES: FeeSettings = { mode: "market", markupPercent: 0.4, fixedFeeUsd: 0 };
+// Defaults approximate Wise's typical USD->EUR transfer via bank/ACH funding
+// (their cheapest option): no rate markup, ~0.41% fee + a small flat fee.
+// Actual fees vary by amount and funding method - check wise.com for an exact quote.
+const DEFAULT_FEES: FeeSettings = { mode: "wise", feePercent: 0.41, fixedFeeUsd: 0.2 };
 
 async function fetchJson<T>(path: string): Promise<T | null> {
   try {

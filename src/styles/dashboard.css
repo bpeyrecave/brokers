@@ -514,6 +514,13 @@
   margin-top: 0.15rem;
 }
 
+.calc-fee-note {
+  display: block;
+  font-size: 0.76rem;
+  color: var(--ink-faint);
+  margin-top: 0.4rem;
+}
+
 /* ---------- time comparison ---------- */
 
 .tc-list {
@@ -1119,6 +1126,19 @@
 
 .fees-fields .field input {
   width: 7rem;
+}
+
+.fees-footnote {
+  margin-top: 1rem;
+  padding-top: 0.85rem;
+  border-top: 1px dashed var(--line);
+  font-size: 0.78rem;
+  color: var(--ink-faint);
+  line-height: 1.5;
+}
+
+.fees-footnote a {
+  color: var(--accent);
 }
 
 /* ---------- smart metrics ---------- */
