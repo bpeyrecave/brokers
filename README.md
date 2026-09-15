@@ -33,10 +33,9 @@ It is not a trading tool, not investment advice, and it does not predict future 
    isn't worth obsessing over.
 9. **HODLing since the 13th** — a small, playful counter for how many days you've been sitting on this month's
    balance and what that patience is currently worth.
-10. **"When UN sends your salary vs. the best rate that month"** — for each of the last 12 months, what the
-    organization's 13th-benchmark rate gave you next to what that month's single best USD→EUR day would have given
-    you, plus a running annual total of that "perfect timing" upside — mostly to show whether chasing it is worth
-    the effort.
+10. **"When UNDP sends your salary vs. the best rate that month"** — for each of the last 12 months, what UNDP's
+    13th-benchmark rate gave you next to what that month's single best USD→EUR day would have given you, plus a
+    running annual total of that "perfect timing" upside — mostly to show whether chasing it is worth the effort.
 
 ## Data sources
 

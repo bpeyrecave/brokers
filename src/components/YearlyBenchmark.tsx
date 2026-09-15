@@ -27,8 +27,8 @@ export function YearlyBenchmark() {
   return (
     <div className="card">
       <CardTitle icon={IconBars} tone="accent">
-        When UN sends your salary vs. the best rate that month
-        <InfoTooltip text="For each of the last 12 months: what your chosen USD amount was worth converted on the UN's rate date (the 13th, or nearest trading day) versus what it would have been worth converted on that month's single best USD→EUR day. Uses the raw market rate, no fees." />
+        When UNDP sends your salary vs. the best rate that month
+        <InfoTooltip text="For each of the last 12 months: what your chosen USD amount was worth converted on the UNDP's rate date (the 13th, or nearest trading day) versus what it would have been worth converted on that month's single best USD→EUR day. Uses the raw market rate, no fees." />
       </CardTitle>
       <div className="card-sub">
         ${amount.toLocaleString("en-US")} on the 13th of every month for the last year, compared with the best rate
@@ -37,7 +37,7 @@ export function YearlyBenchmark() {
 
       <div className="bench-summary">
         <div>
-          <div className="stat-label">UN's rate (12 months)</div>
+          <div className="stat-label">UNDP's rate (12 months)</div>
           <div className="stat-value num">{formatEUR(totalBenchmark)}</div>
         </div>
         <div>

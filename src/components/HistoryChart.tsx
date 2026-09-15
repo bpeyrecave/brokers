@@ -90,7 +90,7 @@ export function HistoryChart() {
         <div>
           <CardTitle icon={IconChart} tone="violet">Historical USD → EUR</CardTitle>
           <div className="card-sub" style={{ marginBottom: 0 }}>
-            How many euros $1 has bought over time. Dashed lines mark the 13th of each month — the UN's rate.
+            How many euros $1 has bought over time. Dashed lines mark the 13th of each month — the UNDP's rate.
           </div>
         </div>
         <div className="range-tabs">
@@ -162,7 +162,7 @@ export function HistoryChart() {
         <span>
           <span className="dot" style={{ background: "var(--amber)" }} /> Current rate
         </span>
-        <span style={{ color: "var(--amber)" }}>┄ 13th of each month (UN rate)</span>
+        <span style={{ color: "var(--amber)" }}>┄ 13th of each month (UNDP rate)</span>
       </div>
     </div>
   );

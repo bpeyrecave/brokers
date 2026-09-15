@@ -16,22 +16,22 @@ export function BenchmarkCard() {
   const cls = positive ? "delta-up" : negative ? "delta-down" : "delta-flat";
 
   const sentence = positive
-    ? `Managing the exchange yourself would currently have earned you ${formatSignedEUR(cmp.diffEur)} this month, compared with the UN's rate.`
+    ? `Managing the exchange yourself would currently have earned you ${formatSignedEUR(cmp.diffEur)} this month, compared with the UNDP's rate.`
     : negative
-      ? `The UN's ${formatLong(cmp.benchmarkPoint.date)} rate is currently ${formatSignedEUR(-cmp.diffEur)} better than today's rate for this amount.`
-      : `Today's rate is essentially the same as the UN's rate this month.`;
+      ? `The UNDP's ${formatLong(cmp.benchmarkPoint.date)} rate is currently ${formatSignedEUR(-cmp.diffEur)} better than today's rate for this amount.`
+      : `Today's rate is essentially the same as the UNDP's rate this month.`;
 
   return (
     <div className="card">
       <CardTitle icon={IconTarget} tone="violet">
         You vs. the 13th
-        <InfoTooltip text="The UN sets its exchange rate around the 13th of each month. This compares that rate against today's rate, for the amount above." />
+        <InfoTooltip text="The UNDP sets its exchange rate around the 13th of each month. This compares that rate against today's rate, for the amount above." />
       </CardTitle>
-      <div className="card-sub">UN's rate: {formatLong(cmp.benchmarkPoint.date)}{!cmp.benchmarkExact ? " (nearest trading day)" : ""}</div>
+      <div className="card-sub">UNDP's rate: {formatLong(cmp.benchmarkPoint.date)}{!cmp.benchmarkExact ? " (nearest trading day)" : ""}</div>
 
       <div className="benchmark-grid">
         <div className="benchmark-figure">
-          <div className="figure-label">UN's rate</div>
+          <div className="figure-label">UNDP's rate</div>
           <div className="figure-value num">{formatEUR(cmp.eurAtBenchmark)}</div>
         </div>
         <div className="benchmark-figure">
