@@ -17,10 +17,11 @@ export function YearlyBenchmark() {
   const totalBest = rows.reduce((s, r) => s + r.bestEur, 0);
   const totalUpside = totalBest - totalBenchmark;
 
-  const values = rows.map((r) => r.eur);
+  const values = rows.flatMap((r) => [r.eur, r.bestEur]);
   const min = Math.min(...values);
   const max = Math.max(...values);
   const range = Math.max(max - min, 0.01);
+  const barWidth = (v: number) => 8 + ((v - min) / range) * 92;
   const latestMonthKey = rows[rows.length - 1].monthKey;
 
   return (
@@ -53,7 +54,6 @@ export function YearlyBenchmark() {
 
       <div className="bench-list">
         {rows.map((row) => {
-          const widthPct = 8 + ((row.eur - min) / range) * 92;
           const isLatest = row.monthKey === latestMonthKey;
           return (
             <div className="bench-month-group" key={row.monthKey}>
@@ -63,15 +63,20 @@ export function YearlyBenchmark() {
                   {!row.exact && <span className="bench-note"> · nearest trading day</span>}
                 </div>
                 <div className="bench-bar-track">
-                  <div className="bench-bar-fill" style={{ width: `${widthPct}%` }} />
+                  <div className="bench-bar-fill bench-bar-benchmark" style={{ width: `${barWidth(row.eur)}%` }} />
                 </div>
                 <div className="bench-rate num">€{formatRate(row.point.rate)}</div>
                 <div className="bench-value num">{formatEUR(row.eur)}</div>
               </div>
-              <div className="bench-subrow">
-                Best that month ({formatShort(row.bestPoint.date)}, €{formatRate(row.bestPoint.rate)}):{" "}
-                <strong className="num">{formatEUR(row.bestEur)}</strong>{" "}
-                <span className="bench-upside num">{formatSignedEUR(row.upsideEur)}</span>
+              <div className="bench-row bench-row-best">
+                <div className="bench-label bench-label-best">Best ({formatShort(row.bestPoint.date)})</div>
+                <div className="bench-bar-track">
+                  <div className="bench-bar-fill bench-bar-best" style={{ width: `${barWidth(row.bestEur)}%` }} />
+                </div>
+                <div className="bench-rate num">€{formatRate(row.bestPoint.rate)}</div>
+                <div className="bench-value num">
+                  {formatEUR(row.bestEur)} <span className="bench-upside num">{formatSignedEUR(row.upsideEur)}</span>
+                </div>
               </div>
             </div>
           );
