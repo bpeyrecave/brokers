@@ -3,7 +3,6 @@ import { DashboardProvider, useDashboard } from "./context/DashboardContext";
 import { Sidebar } from "./components/Sidebar";
 import { Header } from "./components/Header";
 import { RateHero } from "./components/RateHero";
-import { Calculator } from "./components/Calculator";
 import { TimeComparison } from "./components/TimeComparison";
 import { BenchmarkCard } from "./components/BenchmarkCard";
 import { WhatIfTool } from "./components/WhatIfTool";
@@ -54,9 +53,8 @@ function DashboardBody() {
         <Header dataStale={dataStale} />
 
         <div className="container">
-          <section id="overview" className="section grid grid-hero">
+          <section id="overview" className="section">
             <RateHero />
-            <Calculator />
           </section>
 
           <section id="benchmark" className="section grid grid-3">
