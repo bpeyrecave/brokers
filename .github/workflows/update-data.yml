@@ -4,7 +4,7 @@ on:
   schedule:
     # Three times a day (UTC). ECB reference rates are published once on
     # business days around 16:00 CET, so at least one of these picks up the
-    # fresh rate; the others keep the news brief and events calendar current.
+    # fresh rate; the others keep the news brief current.
     - cron: "0 6 * * *"
     - cron: "0 12 * * *"
     - cron: "0 18 * * *"
@@ -31,9 +31,6 @@ jobs:
 
       - name: Fetch USD/EUR exchange rate history
         run: node scripts/fetch-fx.mjs
-
-      - name: Fetch USD/EUR-relevant economic calendar
-        run: node scripts/fetch-events.mjs
 
       - name: Generate today's AI FX brief
         env:

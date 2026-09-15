@@ -1,5 +1,5 @@
 import { createContext, useContext, useEffect, useMemo, useState, type ReactNode } from "react";
-import type { EventsData, FxBrief, FxHistory, FxPoint, FeeSettings } from "../lib/types";
+import type { FxBrief, FxHistory, FxPoint, FeeSettings } from "../lib/types";
 import { todayOrLatest } from "../lib/calculations";
 
 interface DashboardData {
@@ -7,7 +7,6 @@ interface DashboardData {
   error: string | null;
   series: FxPoint[];
   fetchedAt: string | null;
-  events: EventsData | null;
   brief: FxBrief | null;
   asOfIso: string;
   amount: number;
@@ -46,7 +45,6 @@ export function DashboardProvider({ children }: { children: ReactNode }) {
   const [error, setError] = useState<string | null>(null);
   const [series, setSeries] = useState<FxPoint[]>([]);
   const [fetchedAt, setFetchedAt] = useState<string | null>(null);
-  const [events, setEvents] = useState<EventsData | null>(null);
   const [brief, setBrief] = useState<FxBrief | null>(null);
   const [amount, setAmount] = useState(5000);
   const [fees, setFees] = useState<FeeSettings>(DEFAULT_FEES);
@@ -54,11 +52,7 @@ export function DashboardProvider({ children }: { children: ReactNode }) {
   useEffect(() => {
     let cancelled = false;
     (async () => {
-      const [history, ev, br] = await Promise.all([
-        fetchJson<FxHistory>("fx-history.json"),
-        fetchJson<EventsData>("events.json"),
-        fetchJson<FxBrief>("brief.json"),
-      ]);
+      const [history, br] = await Promise.all([fetchJson<FxHistory>("fx-history.json"), fetchJson<FxBrief>("brief.json")]);
       if (cancelled) return;
       if (!history || history.series.length === 0) {
         setError("Could not load exchange rate data. Please try again later.");
@@ -66,7 +60,6 @@ export function DashboardProvider({ children }: { children: ReactNode }) {
         setSeries(history.series);
         setFetchedAt(history.fetchedAt);
       }
-      setEvents(ev);
       setBrief(br);
       setLoading(false);
     })();
@@ -82,7 +75,6 @@ export function DashboardProvider({ children }: { children: ReactNode }) {
     error,
     series,
     fetchedAt,
-    events,
     brief,
     asOfIso,
     amount,

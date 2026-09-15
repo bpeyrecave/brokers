@@ -9,7 +9,6 @@ import { BenchmarkCard } from "./components/BenchmarkCard";
 import { WhatIfTool } from "./components/WhatIfTool";
 import { DecisionCard } from "./components/DecisionCard";
 import { AIBrief } from "./components/AIBrief";
-import { EventsTimeline } from "./components/EventsTimeline";
 import { ConversionLog } from "./components/ConversionLog";
 import { FeesToggle } from "./components/FeesToggle";
 import { SmartMetrics } from "./components/SmartMetrics";
@@ -22,11 +21,11 @@ const HistoryChart = lazy(() => import("./components/HistoryChart").then((m) => 
 const STALE_MS = 36 * 3600 * 1000;
 
 function DashboardBody() {
-  const { loading, error, fetchedAt, events, brief } = useDashboard();
+  const { loading, error, fetchedAt, brief } = useDashboard();
 
   const dataStale = useMemo(
-    () => (!!fetchedAt && Date.now() - new Date(fetchedAt).getTime() > STALE_MS) || events?.ok === false || brief?.ok === false,
-    [fetchedAt, events, brief],
+    () => (!!fetchedAt && Date.now() - new Date(fetchedAt).getTime() > STALE_MS) || brief?.ok === false,
+    [fetchedAt, brief],
   );
 
   if (loading) {
@@ -81,9 +80,8 @@ function DashboardBody() {
             <WhatIfTool />
           </section>
 
-          <section id="brief" className="section grid grid-2">
+          <section id="brief" className="section">
             <AIBrief />
-            <EventsTimeline />
           </section>
 
           <section id="fees" className="section">

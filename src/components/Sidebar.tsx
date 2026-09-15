@@ -19,7 +19,7 @@ const NAV_ITEMS = [
   { id: "history", label: "History", icon: IconChart },
   { id: "yearly", label: "A year of the 13th", icon: IconBars },
   { id: "timing", label: "Timing tools", icon: IconCalendar },
-  { id: "brief", label: "Brief & events", icon: IconCoffee },
+  { id: "brief", label: "FX Brief", icon: IconCoffee },
   { id: "fees", label: "Fees", icon: IconWallet },
   { id: "metrics", label: "Metrics", icon: IconTarget },
   { id: "log", label: "Conversion log", icon: IconList },

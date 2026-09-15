@@ -12,25 +12,6 @@ export interface FxHistory {
   series: FxPoint[];
 }
 
-export type EventImpact = "HIGH" | "MEDIUM" | "LOW";
-
-export interface FxEvent {
-  title: string;
-  country: string;
-  date: string; // ISO datetime
-  impact: EventImpact;
-  forecast: string | null;
-  previous: string | null;
-  note: string;
-}
-
-export interface EventsData {
-  source: string | string[];
-  fetchedAt: string;
-  ok: boolean;
-  events: FxEvent[];
-}
-
 export interface FxBrief {
   ok: boolean;
   generatedAt: string;
