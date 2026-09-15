@@ -25,7 +25,7 @@ export function WhatIfTool() {
 
   return (
     <div className="card">
-      <div className="card-title">What if I had exchanged?</div>
+      <h2 className="card-title">What if I had exchanged?</h2>
       <div className="card-sub">Pick any past date to see what your amount would have been worth.</div>
 
       <div className="whatif-controls">

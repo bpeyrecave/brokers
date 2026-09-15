@@ -6,10 +6,10 @@ export function FeesToggle() {
 
   return (
     <div className="card">
-      <div className="card-title">
+      <h2 className="card-title">
         Market rate or real conversion?
         <InfoTooltip text="Market rate mode uses the raw ECB reference rate everywhere on this page. Real conversion mode subtracts a provider markup and flat fee, so figures reflect what you'd actually receive through a service like Wise or your bank." />
-      </div>
+      </h2>
       <div className="card-sub">The theoretical rate isn't always what you actually receive after provider fees.</div>
 
       <div className="fees-bar">

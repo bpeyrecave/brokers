@@ -76,7 +76,7 @@ export function HistoryChart() {
   if (points.length === 0) {
     return (
       <div className="card chart-card">
-        <div className="card-title">Historical USD → EUR</div>
+        <h2 className="card-title">Historical USD → EUR</h2>
         <p className="empty-state">Not enough data yet for this range.</p>
       </div>
     );
@@ -86,7 +86,7 @@ export function HistoryChart() {
     <div className="card chart-card">
       <div className="chart-header">
         <div>
-          <div className="card-title">Historical USD → EUR</div>
+          <h2 className="card-title">Historical USD → EUR</h2>
           <div className="card-sub" style={{ marginBottom: 0 }}>
             How many euros $1 has bought over time. Dashed lines mark the 13th of each month — your organization's benchmark.
           </div>

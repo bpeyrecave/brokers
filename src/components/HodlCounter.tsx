@@ -16,9 +16,9 @@ export function HodlCounter() {
 
   return (
     <div className="card hodl-card">
-      <div className="hero-eyebrow" style={{ color: "var(--amber)" }}>
+      <h2 className="hero-eyebrow" style={{ color: "var(--amber)" }}>
         HODLing since the 13th
-      </div>
+      </h2>
       <div className="hodl-days num">{hodl.daysSince13th}</div>
       <div className="hodl-values">
         <div>

@@ -10,7 +10,7 @@ export function SmartMetrics() {
 
   return (
     <div className="card">
-      <div className="card-title">Is chasing the perfect rate worth it?</div>
+      <h2 className="card-title">Is chasing the perfect rate worth it?</h2>
       <div className="card-sub">A few extra reference points to keep timing in perspective.</div>
 
       <div className="metric-list">

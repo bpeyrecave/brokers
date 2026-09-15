@@ -21,10 +21,10 @@ export function BenchmarkCard() {
 
   return (
     <div className="card">
-      <div className="card-title">
+      <h2 className="card-title">
         You vs. the 13th
         <InfoTooltip text="Your organization sets its monthly conversion rate around the 13th of each month. This compares that benchmark rate against today's rate, for the amount in the calculator above." />
-      </div>
+      </h2>
       <div className="card-sub">Organization benchmark: {formatLong(cmp.benchmarkPoint.date)}{!cmp.benchmarkExact ? " (nearest trading day)" : ""}</div>
 
       <div className="benchmark-grid">

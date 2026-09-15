@@ -13,7 +13,7 @@ export function Calculator() {
   return (
     <div className="card calc-card">
       <div>
-        <div className="card-title">What do I get today?</div>
+        <h2 className="card-title">What do I get today?</h2>
         <div className="card-sub">Type any amount, or pick a preset — everything below updates with it.</div>
       </div>
 

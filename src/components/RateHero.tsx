@@ -38,7 +38,7 @@ export function RateHero() {
 
   return (
     <div className="hero-card">
-      <div className="hero-eyebrow">USD → EUR · what your salary is actually worth</div>
+      <h2 className="hero-eyebrow">USD → EUR · what your salary is actually worth</h2>
       <div>
         <div className="hero-rate num">
           $1 = €{formatRate(current.point.rate)}

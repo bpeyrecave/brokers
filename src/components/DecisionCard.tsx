@@ -18,7 +18,7 @@ export function DecisionCard() {
 
   return (
     <div className="card">
-      <div className="card-title">
+      <h2 className="card-title">
         Should I exchange today?
         <InfoTooltip
           text={
@@ -28,7 +28,7 @@ export function DecisionCard() {
             </>
           }
         />
-      </div>
+      </h2>
       <div className="card-sub">Based on transparent historical percentiles — not a prediction of what happens next.</div>
 
       <span className={`favorability-badge badge-${summary.label.toLowerCase()}`}>{FAVORABILITY_LABELS[summary.label]}</span>

@@ -92,7 +92,7 @@ export function ConversionLog() {
 
   return (
     <div className="card">
-      <div className="card-title">Was the headache worth it?</div>
+      <h2 className="card-title">Was the headache worth it?</h2>
       <div className="card-sub">
         Log your real conversions and compare them against simply using the 13th-of-the-month benchmark every time.
       </div>

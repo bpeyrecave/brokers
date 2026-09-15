@@ -16,7 +16,7 @@ export function EventsTimeline() {
 
   return (
     <div className="card">
-      <div className="card-title">What to watch</div>
+      <h2 className="card-title">What to watch</h2>
       <div className="card-sub">Upcoming USD/EUR-relevant releases and central bank events.</div>
 
       {upcoming.length === 0 ? (

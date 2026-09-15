@@ -6,7 +6,7 @@ export function AIBrief() {
   if (!brief) {
     return (
       <div className="card brief-card">
-        <div className="card-title">☕ Today's FX Brief</div>
+        <h2 className="card-title">☕ Today's FX Brief</h2>
         <p className="empty-state">The daily brief hasn't been generated yet. Everything else on this dashboard is unaffected.</p>
       </div>
     );
@@ -15,7 +15,7 @@ export function AIBrief() {
   if (!brief.ok) {
     return (
       <div className="card brief-card">
-        <div className="card-title">☕ Today's FX Brief</div>
+        <h2 className="card-title">☕ Today's FX Brief</h2>
         <p className="empty-state">{brief.summary || "The daily brief is temporarily unavailable."}</p>
       </div>
     );
@@ -23,7 +23,7 @@ export function AIBrief() {
 
   return (
     <div className="card brief-card">
-      <div className="card-title">☕ Today's FX Brief</div>
+      <h2 className="card-title">☕ Today's FX Brief</h2>
       <div className="brief-headline">{brief.headline}</div>
       <p className="brief-summary">{brief.summary}</p>
 
