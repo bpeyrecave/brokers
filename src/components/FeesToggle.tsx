@@ -10,7 +10,7 @@ export function FeesToggle() {
     <div className="card">
       <CardTitle icon={IconWallet} tone="accent">
         Market rate or Wise?
-        <InfoTooltip text="Wise converts at the real mid-market rate (no markup) and charges a transparent fee instead - a small percentage of the amount plus a small flat fee. Market rate mode shows the raw rate with no fees, for comparison. Adjust the numbers below to match your actual Wise quote." />
+        <InfoTooltip text="Wise converts at the real mid-market rate (no markup) and charges a transparent fee instead. That fee is a percentage of the amount that gets cheaper on the portion above a threshold - like a tax bracket - plus a small flat fee. Market rate mode shows the raw rate with no fees, for comparison. Adjust the numbers below to match your actual Wise quote." />
       </CardTitle>
       <div className="card-sub">
         Since we always convert through Wise, that's the default below — it deducts a transparent fee, not a hidden
@@ -30,14 +30,36 @@ export function FeesToggle() {
         {fees.mode === "wise" && (
           <div className="fees-fields">
             <div className="field">
-              <label htmlFor="fee-percent">Wise fee (%)</label>
+              <label htmlFor="fee-percent-below">Fee up to threshold (%)</label>
               <input
-                id="fee-percent"
+                id="fee-percent-below"
                 type="number"
                 step="0.01"
                 min={0}
-                value={fees.feePercent}
-                onChange={(e) => setFees({ ...fees, feePercent: Number(e.target.value) || 0 })}
+                value={fees.feePercentBelow}
+                onChange={(e) => setFees({ ...fees, feePercentBelow: Number(e.target.value) || 0 })}
+              />
+            </div>
+            <div className="field">
+              <label htmlFor="fee-threshold">Threshold (USD)</label>
+              <input
+                id="fee-threshold"
+                type="number"
+                step="100"
+                min={0}
+                value={fees.tierThresholdUsd}
+                onChange={(e) => setFees({ ...fees, tierThresholdUsd: Number(e.target.value) || 0 })}
+              />
+            </div>
+            <div className="field">
+              <label htmlFor="fee-percent-above">Fee above threshold (%)</label>
+              <input
+                id="fee-percent-above"
+                type="number"
+                step="0.01"
+                min={0}
+                value={fees.feePercentAbove}
+                onChange={(e) => setFees({ ...fees, feePercentAbove: Number(e.target.value) || 0 })}
               />
             </div>
             <div className="field">
@@ -57,8 +79,8 @@ export function FeesToggle() {
 
       {fees.mode === "wise" && (
         <p className="fees-footnote">
-          Defaults approximate a typical USD→EUR Wise transfer funded by bank/ACH. Your actual fee depends on the
-          amount and funding method — check{" "}
+          Defaults approximate a typical USD→EUR Wise transfer funded by bank/ACH, where the fee percentage steps
+          down above the threshold. Your actual fee depends on the amount and funding method — check{" "}
           <a href="https://wise.com/us/send-money/" target="_blank" rel="noreferrer">
             wise.com
           </a>{" "}

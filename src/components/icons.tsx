@@ -35,6 +35,18 @@ export function IconCalculator(props: SVGProps<SVGSVGElement>) {
   );
 }
 
+export function IconBars(props: SVGProps<SVGSVGElement>) {
+  return (
+    <svg {...base(props)}>
+      <path d="M4 20V4" />
+      <path d="M4 20h16" />
+      <rect x="7" y="14" width="2.6" height="6" rx="0.6" fill="currentColor" stroke="none" />
+      <rect x="11.7" y="10" width="2.6" height="10" rx="0.6" fill="currentColor" stroke="none" />
+      <rect x="16.4" y="12.5" width="2.6" height="7.5" rx="0.6" fill="currentColor" stroke="none" />
+    </svg>
+  );
+}
+
 export function IconChart(props: SVGProps<SVGSVGElement>) {
   return (
     <svg {...base(props)}>

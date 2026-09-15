@@ -37,7 +37,7 @@ function emptyForm(defaultDate: string, defaultRate: number, wiseFees: FeeSettin
 export function ConversionLog() {
   const { series, asOfIso, fees } = useDashboard();
   const latestRate = series[series.length - 1]?.rate ?? 0;
-  const wiseFees: FeeSettings = { mode: "wise", feePercent: fees.feePercent, fixedFeeUsd: fees.fixedFeeUsd };
+  const wiseFees: FeeSettings = { ...fees, mode: "wise" };
 
   const [conversions, setConversions] = useState<ConversionRecord[]>(() => conversionStore.list());
   const [form, setForm] = useState(() => emptyForm(asOfIso, latestRate, wiseFees));

@@ -1180,6 +1180,105 @@
   font-size: 0.98rem;
 }
 
+/* ---------- yearly benchmark ---------- */
+
+.bench-summary {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1rem;
+  margin-bottom: 1.25rem;
+}
+
+@media (max-width: 700px) {
+  .bench-summary {
+    grid-template-columns: 1fr;
+  }
+}
+
+.bench-summary .stat-label {
+  font-size: 0.75rem;
+  color: var(--ink-faint);
+}
+
+.bench-summary .stat-value {
+  font-size: 1.15rem;
+  font-family: var(--font-display);
+  margin-top: 0.15rem;
+}
+
+.bench-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0.55rem;
+}
+
+.bench-row {
+  display: grid;
+  grid-template-columns: 5.5rem 1fr auto auto;
+  align-items: center;
+  gap: 0.85rem;
+  padding: 0.4rem 0;
+}
+
+.bench-row.is-latest .bench-label,
+.bench-row.is-latest .bench-value {
+  font-weight: 700;
+  color: var(--ink);
+}
+
+.bench-label {
+  font-size: 0.82rem;
+  color: var(--ink-soft);
+}
+
+.bench-note {
+  color: var(--ink-faint);
+}
+
+.bench-bar-track {
+  height: 8px;
+  border-radius: 999px;
+  background: var(--line-soft);
+  overflow: hidden;
+}
+
+.bench-bar-fill {
+  height: 100%;
+  border-radius: 999px;
+  background: var(--violet);
+}
+
+.bench-bar-fill.is-best {
+  background: var(--accent);
+}
+
+.bench-bar-fill.is-worst {
+  background: var(--red);
+}
+
+.bench-rate {
+  font-size: 0.8rem;
+  color: var(--ink-faint);
+  min-width: 4.5rem;
+  text-align: right;
+}
+
+.bench-value {
+  font-size: 0.9rem;
+  min-width: 5.5rem;
+  text-align: right;
+}
+
+@media (max-width: 640px) {
+  .bench-row {
+    grid-template-columns: 4rem 1fr auto;
+  }
+
+  .bench-rate {
+    display: none;
+  }
+}
+
 /* ---------- hodl counter ---------- */
 
 .hodl-card {

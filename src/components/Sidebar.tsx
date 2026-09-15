@@ -1,5 +1,6 @@
 import { useActiveSection } from "../lib/useActiveSection";
 import {
+  IconBars,
   IconBell,
   IconCalendar,
   IconChart,
@@ -16,6 +17,7 @@ const NAV_ITEMS = [
   { id: "overview", label: "Overview", icon: IconGrid },
   { id: "benchmark", label: "Benchmark & HODL", icon: IconClock },
   { id: "history", label: "History", icon: IconChart },
+  { id: "yearly", label: "A year of the 13th", icon: IconBars },
   { id: "timing", label: "Timing tools", icon: IconCalendar },
   { id: "brief", label: "Brief & events", icon: IconCoffee },
   { id: "fees", label: "Fees", icon: IconWallet },

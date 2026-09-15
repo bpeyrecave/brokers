@@ -45,13 +45,20 @@ export type FeeMode = "market" | "wise";
 
 /**
  * Wise (and providers like it) don't mark up the exchange rate itself - you get
- * the real mid-market rate - they charge a transparent fee instead: a small
- * percentage of the amount sent, plus sometimes a small flat fee.
+ * the real mid-market rate - they charge a transparent fee instead: a small flat
+ * fee plus a percentage of the amount that itself gets cheaper as the amount
+ * grows. Modeled here as two marginal tiers (like a tax bracket): a higher
+ * percentage on the portion of the amount up to `tierThresholdUsd`, and a lower
+ * percentage on the portion above it.
  */
 export interface FeeSettings {
   mode: FeeMode;
-  /** Wise's fee as a percentage of the USD amount, e.g. 0.41 for 0.41%. */
-  feePercent: number;
+  /** Fee percentage applied to the portion of the amount up to tierThresholdUsd. */
+  feePercentBelow: number;
+  /** Fee percentage applied to the portion of the amount above tierThresholdUsd. */
+  feePercentAbove: number;
+  /** USD amount where the fee percentage steps down. */
+  tierThresholdUsd: number;
   /** Flat fee per transfer, in USD. */
   fixedFeeUsd: number;
 }

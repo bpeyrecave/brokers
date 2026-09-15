@@ -14,6 +14,7 @@ import { ConversionLog } from "./components/ConversionLog";
 import { FeesToggle } from "./components/FeesToggle";
 import { SmartMetrics } from "./components/SmartMetrics";
 import { HodlCounter } from "./components/HodlCounter";
+import { YearlyBenchmark } from "./components/YearlyBenchmark";
 import { Footer } from "./components/Footer";
 
 const HistoryChart = lazy(() => import("./components/HistoryChart").then((m) => ({ default: m.HistoryChart })));
@@ -69,6 +70,10 @@ function DashboardBody() {
             <Suspense fallback={<div className="card chart-card">Loading chart…</div>}>
               <HistoryChart />
             </Suspense>
+          </section>
+
+          <section id="yearly" className="section">
+            <YearlyBenchmark />
           </section>
 
           <section id="timing" className="section grid grid-2">

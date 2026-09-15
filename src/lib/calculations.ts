@@ -14,15 +14,19 @@ export interface ConversionResult {
 /**
  * Applies the fee model on top of the market rate. In "market" mode, fees are
  * zero. In "wise" mode, the exchange rate itself is untouched (Wise converts
- * at the real mid-market rate) and instead a transparent fee - a percentage
- * of the amount plus a small flat fee - is deducted from the USD before
- * conversion, matching how Wise actually charges.
+ * at the real mid-market rate) and instead a transparent fee is deducted from
+ * the USD before conversion, matching how Wise actually charges. The
+ * percentage fee is applied in two marginal tiers - like a tax bracket - since
+ * Wise's real percentage fee gets cheaper as the amount grows: a higher rate
+ * on the portion up to the threshold, a lower rate above it.
  */
 export function convertWithFees(usdAmount: number, rate: number, fees: FeeSettings): ConversionResult {
   if (fees.mode === "market" || usdAmount <= 0) {
     return { eur: convertMarket(usdAmount, rate), feesUsd: 0, effectiveRate: rate };
   }
-  const feesUsd = usdAmount * (fees.feePercent / 100) + fees.fixedFeeUsd;
+  const belowAmount = Math.min(usdAmount, fees.tierThresholdUsd);
+  const aboveAmount = Math.max(usdAmount - fees.tierThresholdUsd, 0);
+  const feesUsd = belowAmount * (fees.feePercentBelow / 100) + aboveAmount * (fees.feePercentAbove / 100) + fees.fixedFeeUsd;
   const usdAfterFees = Math.max(usdAmount - feesUsd, 0);
   const eur = usdAfterFees * rate;
   return { eur, feesUsd, effectiveRate: rate };
@@ -63,12 +67,17 @@ export function latestPoint(series: FxPoint[]): FxPoint | undefined {
   return series[series.length - 1];
 }
 
+/** The 13th of the month before the given "yyyy-mm-13" (or any) date. */
+export function previousThirteenthIso(thirteenthIso: string): string {
+  const prevMonthAnchor = addDays(thirteenthIso, -20); // lands in the previous month
+  return thirteenthOf(prevMonthAnchor);
+}
+
 /** The most recent "13th of the month" benchmark date on or before `asOfIso`. */
 export function mostRecentThirteenthIso(asOfIso: string): string {
   const day = Number(asOfIso.slice(8, 10));
   if (day >= 13) return thirteenthOf(asOfIso);
-  const prevMonthAnchor = addDays(thirteenthOf(asOfIso), -20); // lands in the previous month
-  return thirteenthOf(prevMonthAnchor);
+  return previousThirteenthIso(thirteenthOf(asOfIso));
 }
 
 export function percentChange(from: number, to: number): number {
@@ -293,6 +302,45 @@ export function buildHodlSummary(series: FxPoint[], usdAmount: number, asOfIso: 
     eurToday: cmp.eurToday,
     diffEur: cmp.diffEur,
   };
+}
+
+export interface MonthlyBenchmarkRow {
+  monthKey: string; // yyyy-mm
+  dateRequested: string;
+  point: FxPoint;
+  exact: boolean;
+  eur: number;
+}
+
+/**
+ * The organization's 13th-of-the-month benchmark, applied to a fixed USD
+ * amount, for each of the trailing `months` months ending at the most recent
+ * 13th on or before `asOfIso`. Returned oldest first.
+ */
+export function buildMonthlyThirteenths(
+  series: FxPoint[],
+  usdAmount: number,
+  asOfIso: string,
+  months = 12,
+): MonthlyBenchmarkRow[] {
+  const rows: MonthlyBenchmarkRow[] = [];
+  let anchor = mostRecentThirteenthIso(asOfIso);
+
+  for (let i = 0; i < months; i++) {
+    const resolved = resolveTradingPoint(series, anchor);
+    if (resolved) {
+      rows.push({
+        monthKey: monthKey(anchor),
+        dateRequested: anchor,
+        point: resolved.point,
+        exact: resolved.exact,
+        eur: convertMarket(usdAmount, resolved.point.rate),
+      });
+    }
+    anchor = previousThirteenthIso(anchor);
+  }
+
+  return rows.reverse();
 }
 
 export interface SmartMetrics {

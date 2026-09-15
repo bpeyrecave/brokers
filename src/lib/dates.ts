@@ -51,6 +51,11 @@ export function formatMonthYear(iso: string): string {
   return `${MONTHS[d.getUTCMonth()]} ${d.getUTCFullYear()}`;
 }
 
+export function formatMonthShortYear(iso: string): string {
+  const d = parseISODate(iso);
+  return `${MONTHS[d.getUTCMonth()].slice(0, 3)} ${d.getUTCFullYear()}`;
+}
+
 export function todayISO(): string {
   return toISODate(new Date());
 }
