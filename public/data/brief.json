@@ -1,13 +1,17 @@
 {
   "ok": true,
-  "generatedAt": "2026-09-28T19:28:58.713Z",
+  "generatedAt": "2026-09-28T22:56:11.802Z",
   "model": "claude-sonnet-5",
-  "headline": "The dollar has pushed the euro down to a two-month low.",
-  "summary": "Coming into September, many traders still expected the Fed to eventually cut rates, but instead the Fed raised its key rate by 0.25% to 3.75-4.00% on September 16 — its first hike since 2023 — citing persistent inflation. Since then, strong US business activity data and hawkish comments from Fed officials have pushed the odds of another Fed hike in October up to roughly 65-70%, even though the ECB also raised its own rate by 0.25% and eurozone business activity hit a multi-year high. Despite the ECB move, the euro has actually weakened against the dollar, dropping to around $1.14 — its lowest level in about two months — as US bond yields climbed to their highest since 2007.",
+  "headline": "USD is stronger today, near its firmest level against the euro in about two months.",
+  "summary": "Markets had widely expected both the Fed and the ECB to raise interest rates this month, and that's exactly what happened: the Fed hiked to 3.75%-4.00% on Sept 16, and the ECB hiked to 2.50% on Sept 10, both citing inflation that's staying stubbornly high, partly due to energy prices tied to Middle East tensions. Since those decisions, the dollar has actually gained ground against the euro, helped by stronger-than-expected US economic data and Fed officials hinting more hikes could follow, while some analysts think the ECB may be closer to done raising rates. Right now 1 USD buys about 0.88 EUR, up from roughly 0.86 a month ago.",
   "whatMattersNext": [
     {
       "date": "Fri Oct 2",
-      "label": "US September jobs report and eurozone flash inflation estimate"
+      "label": "Eurozone flash inflation estimate for September"
+    },
+    {
+      "date": "Fri Oct 2",
+      "label": "US jobs report (September)"
     },
     {
       "date": "Wed Oct 28",
@@ -18,5 +22,5 @@
       "label": "ECB rate decision"
     }
   ],
-  "forYou": "If you're converting USD to EUR right now, you'll get a bit fewer euros per dollar... wait, actually a bit more dollars go further since the euro is weaker, so your USD paycheck stretches slightly more in euro terms than it did a month ago."
+  "forYou": "If you're converting USD to EUR right now, your dollars are fetching a bit more euro than they were a few weeks ago, though nobody can say if that holds."
 }
