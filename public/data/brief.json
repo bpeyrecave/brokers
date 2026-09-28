@@ -1,26 +1,22 @@
 {
   "ok": true,
-  "generatedAt": "2026-09-28T08:47:51.591Z",
+  "generatedAt": "2026-09-28T19:28:58.713Z",
   "model": "claude-sonnet-5",
-  "headline": "USD is stronger today, with EUR/USD near two-month lows.",
-  "summary": "Markets had already priced in rate hikes from both the Fed (Sept 16, to 3.75-4.00%) and the ECB (Sept 10, to 2.50%), both citing energy-driven inflation from the ongoing Middle East conflict. Since those decisions, stronger-than-expected US economic data (PMI surveys) and hawkish comments from Fed officials have pushed the dollar higher, even though eurozone business activity has also been surprisingly strong. As a result, EUR/USD has slid from around 1.15 in mid-September to roughly 1.138 now, near its weakest level in about two months.",
+  "headline": "The dollar has pushed the euro down to a two-month low.",
+  "summary": "Coming into September, many traders still expected the Fed to eventually cut rates, but instead the Fed raised its key rate by 0.25% to 3.75-4.00% on September 16 — its first hike since 2023 — citing persistent inflation. Since then, strong US business activity data and hawkish comments from Fed officials have pushed the odds of another Fed hike in October up to roughly 65-70%, even though the ECB also raised its own rate by 0.25% and eurozone business activity hit a multi-year high. Despite the ECB move, the euro has actually weakened against the dollar, dropping to around $1.14 — its lowest level in about two months — as US bond yields climbed to their highest since 2007.",
   "whatMattersNext": [
     {
-      "date": "Tue Sep 29",
-      "label": "US JOLTS job openings data (labor market health check)"
-    },
-    {
       "date": "Fri Oct 2",
-      "label": "US September jobs report (nonfarm payrolls)"
+      "label": "US September jobs report and eurozone flash inflation estimate"
     },
     {
       "date": "Wed Oct 28",
-      "label": "Next Federal Reserve rate decision"
+      "label": "Federal Reserve rate decision"
     },
     {
       "date": "Thu Oct 29",
-      "label": "Next ECB rate decision"
+      "label": "ECB rate decision"
     }
   ],
-  "forYou": "With the dollar relatively strong right now, converting USD paychecks into euros gets you somewhat fewer euros than it did a couple of weeks ago."
+  "forYou": "If you're converting USD to EUR right now, you'll get a bit fewer euros per dollar... wait, actually a bit more dollars go further since the euro is weaker, so your USD paycheck stretches slightly more in euro terms than it did a month ago."
 }
