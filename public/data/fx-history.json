@@ -2,7 +2,7 @@
   "base": "USD",
   "quote": "EUR",
   "source": "Frankfurter API (ECB reference rates)",
-  "fetchedAt": "2026-09-29T11:51:27.157Z",
+  "fetchedAt": "2026-09-29T17:54:48.010Z",
   "series": [
     {
       "date": "2024-08-30",
@@ -2123,6 +2123,10 @@
     {
       "date": "2026-09-28",
       "rate": 0.87889
+    },
+    {
+      "date": "2026-09-29",
+      "rate": 0.88067
     }
   ]
 }
