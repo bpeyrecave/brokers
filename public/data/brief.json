@@ -1,17 +1,17 @@
 {
   "ok": true,
-  "generatedAt": "2026-09-28T22:56:11.802Z",
+  "generatedAt": "2026-09-29T11:51:48.641Z",
   "model": "claude-sonnet-5",
-  "headline": "USD is stronger today, near its firmest level against the euro in about two months.",
-  "summary": "Markets had widely expected both the Fed and the ECB to raise interest rates this month, and that's exactly what happened: the Fed hiked to 3.75%-4.00% on Sept 16, and the ECB hiked to 2.50% on Sept 10, both citing inflation that's staying stubbornly high, partly due to energy prices tied to Middle East tensions. Since those decisions, the dollar has actually gained ground against the euro, helped by stronger-than-expected US economic data and Fed officials hinting more hikes could follow, while some analysts think the ECB may be closer to done raising rates. Right now 1 USD buys about 0.88 EUR, up from roughly 0.86 a month ago.",
+  "headline": "USD is stronger than it's been in weeks, with $1 now buying about 0.88 EUR.",
+  "summary": "Both the Fed and ECB raised interest rates this month for the first time in years, largely because an oil-price shock tied to Middle East tensions pushed inflation back up in both regions. Markets had already priced in these hikes, so the bigger driver of recent moves has been Fed officials signaling more hikes may follow, while the ECB has sounded less certain about doing the same. That shifting expectation gap — not any single headline — has pushed the dollar broadly higher over the past couple of weeks.",
   "whatMattersNext": [
     {
       "date": "Fri Oct 2",
-      "label": "Eurozone flash inflation estimate for September"
+      "label": "US jobs report (September data)"
     },
     {
-      "date": "Fri Oct 2",
-      "label": "US jobs report (September)"
+      "date": "Tue Oct 14",
+      "label": "US inflation (CPI) report"
     },
     {
       "date": "Wed Oct 28",
@@ -22,5 +22,5 @@
       "label": "ECB rate decision"
     }
   ],
-  "forYou": "If you're converting USD to EUR right now, your dollars are fetching a bit more euro than they were a few weeks ago, though nobody can say if that holds."
+  "forYou": "If you're moving USD into EUR right now, your dollars go a bit further than they did a month ago, though these rate-expectation shifts can move things around quickly in either direction."
 }
