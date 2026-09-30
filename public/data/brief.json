@@ -1,17 +1,13 @@
 {
   "ok": true,
-  "generatedAt": "2026-09-29T11:51:48.641Z",
+  "generatedAt": "2026-09-30T21:52:45.810Z",
   "model": "claude-sonnet-5",
-  "headline": "USD is stronger than it's been in weeks, with $1 now buying about 0.88 EUR.",
-  "summary": "Both the Fed and ECB raised interest rates this month for the first time in years, largely because an oil-price shock tied to Middle East tensions pushed inflation back up in both regions. Markets had already priced in these hikes, so the bigger driver of recent moves has been Fed officials signaling more hikes may follow, while the ECB has sounded less certain about doing the same. That shifting expectation gap — not any single headline — has pushed the dollar broadly higher over the past couple of weeks.",
+  "headline": "USD is strong against EUR, though it eased back very slightly today.",
+  "summary": "Markets had penciled in only a modest pickup in German and French inflation for September, but both came in hotter than expected — Germany's harmonized inflation jumped to 3.3% and France's to 3.4%, mostly due to rising energy prices. Separately, a top Fed official said there's 'no need for urgency' on further rate hikes, cooling some of the aggressive rate-hike bets that had built up after the Fed's mid-September hike. The net effect today was a small euro uptick, but the dollar is still sitting near its highest level of the year against the euro and on track for its biggest monthly gain versus the euro in 14 months.",
   "whatMattersNext": [
     {
       "date": "Fri Oct 2",
-      "label": "US jobs report (September data)"
-    },
-    {
-      "date": "Tue Oct 14",
-      "label": "US inflation (CPI) report"
+      "label": "US September jobs report (hiring & wages)"
     },
     {
       "date": "Wed Oct 28",
@@ -22,5 +18,5 @@
       "label": "ECB rate decision"
     }
   ],
-  "forYou": "If you're moving USD into EUR right now, your dollars go a bit further than they did a month ago, though these rate-expectation shifts can move things around quickly in either direction."
+  "forYou": "Right now a US dollar buys noticeably more euros than it has in over a year, so converting USD to EUR is relatively favorable compared to recent months — though that could shift around the upcoming jobs report and central bank meetings."
 }
