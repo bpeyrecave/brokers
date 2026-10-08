@@ -1,13 +1,13 @@
 {
   "ok": true,
-  "generatedAt": "2026-09-30T21:52:45.810Z",
+  "generatedAt": "2026-10-08T12:31:46.310Z",
   "model": "claude-sonnet-5",
-  "headline": "USD is strong against EUR, though it eased back very slightly today.",
-  "summary": "Markets had penciled in only a modest pickup in German and French inflation for September, but both came in hotter than expected — Germany's harmonized inflation jumped to 3.3% and France's to 3.4%, mostly due to rising energy prices. Separately, a top Fed official said there's 'no need for urgency' on further rate hikes, cooling some of the aggressive rate-hike bets that had built up after the Fed's mid-September hike. The net effect today was a small euro uptick, but the dollar is still sitting near its highest level of the year against the euro and on track for its biggest monthly gain versus the euro in 14 months.",
+  "headline": "The dollar remains strong overall, but eased back a touch today, giving the euro a small bounce.",
+  "summary": "Markets had been pricing in the chance of another Fed rate hike as well as concern that France's fiscal and political troubles would keep weighing on the euro. What actually happened: the Fed's September meeting minutes, released Thursday, showed many officials favor just one more hike this year rather than the multiple hikes traders had been expecting, while France's budget worries and widening French-German bond yields have continued to pressure the euro this week. The net effect: EUR/USD edged up to around 1.1200 on Thursday after the euro came close to a 17-month low near 1.1160 earlier in the week, though the euro is still down noticeably over the past month.",
   "whatMattersNext": [
     {
-      "date": "Fri Oct 2",
-      "label": "US September jobs report (hiring & wages)"
+      "date": "Thu Oct 8",
+      "label": "US weekly jobless claims report and several Fed officials speaking"
     },
     {
       "date": "Wed Oct 28",
@@ -15,8 +15,8 @@
     },
     {
       "date": "Thu Oct 29",
-      "label": "ECB rate decision"
+      "label": "European Central Bank rate decision"
     }
   ],
-  "forYou": "Right now a US dollar buys noticeably more euros than it has in over a year, so converting USD to EUR is relatively favorable compared to recent months — though that could shift around the upcoming jobs report and central bank meetings."
+  "forYou": "The dollar is still relatively strong versus the euro by recent-month standards, so converting USD to EUR is a bit more favorable than it's been for a while, even though the euro ticked up slightly today."
 }
