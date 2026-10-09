@@ -1,22 +1,22 @@
 {
   "ok": true,
-  "generatedAt": "2026-10-08T22:53:22.142Z",
+  "generatedAt": "2026-10-09T12:20:40.338Z",
   "model": "claude-sonnet-5",
-  "headline": "The dollar is holding firm, with the euro near its weakest level in about 17 months.",
-  "summary": "Markets had been expecting weak US jobs data to weigh on the dollar, and that's what happened on the headline number: September payrolls rose by just 29,000 versus the roughly 90,000 expected. But that didn't help the euro much, because investors are more focused on worries about France's government finances, with the gap between French and German borrowing costs widening noticeably this week. As a result, EUR/USD has been trading in the 1.116–1.121 range, close to its lowest level since May 2025, with French political risk currently outweighing the usual 'weak US data = weaker dollar' pattern.",
+  "headline": "USD is a little weaker today, though the euro is still trading near its lowest levels in over a year.",
+  "summary": "Markets had already fully priced in rate hikes from both central banks this autumn — the Fed's move to 3.75%-4.00% on Sept 16 and the ECB's move to a 2.50% deposit rate on Sept 10 both came in as expected, and minutes from the Fed's meeting, released Oct 7, confirmed unanimous support for the hike but barely moved the dollar. Over the past few weeks the euro had been sliding mainly on Eurozone-specific worries — French government debt concerns and a Middle East-driven energy price shock lifting inflation fears on both sides of the Atlantic. Today, the dollar eased back slightly and the euro bounced off that low, helped by reduced safe-haven demand after comments suggesting no imminent US strike on Iran, a pullback in US bond yields from multi-decade highs, and ECB officials signalling they're in no rush to hike again.",
   "whatMattersNext": [
     {
       "date": "Wed Oct 14",
-      "label": "Next US inflation (CPI) report"
+      "label": "US inflation (CPI) report for September"
     },
     {
       "date": "Wed Oct 28",
-      "label": "Federal Reserve rate decision"
+      "label": "Federal Reserve interest rate decision"
     },
     {
       "date": "Thu Oct 29",
-      "label": "ECB rate decision"
+      "label": "ECB interest rate decision"
     }
   ],
-  "forYou": "If you're converting USD to EUR right now, your dollars are buying a bit more euro than they have in over a year, mainly because of jitters about French government debt rather than anything new from the Fed or your paycheck's home economy."
+  "forYou": "If you're converting USD to EUR right now, you're getting slightly more euros than you were yesterday, but still noticeably fewer than a month or two ago, since the dollar has been broadly stronger on higher US interest rates."
 }
